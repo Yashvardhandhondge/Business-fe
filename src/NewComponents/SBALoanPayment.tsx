@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import useBusinessStore from "@/store/buisnessSrore";
+
 import { NotepadText } from "lucide-react";
 import Notes from "./Notes";
 
@@ -50,6 +50,7 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
     if (loanAmount && loanRate && loanTerm) {
       const monthlyRate = loanRate / 100 / 12;
       const numberOfPayments = loanTerm * 12;
+      console.log(loanPayment)
       const payment =
         loanAmount *
         (monthlyRate / (1 - Math.pow(1 + monthlyRate, -numberOfPayments)));
@@ -114,6 +115,7 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             <label className="font-semibold" htmlFor="notes">
               Notes
             </label>
+            
             <Textarea
               id="notes"
               value={notes}

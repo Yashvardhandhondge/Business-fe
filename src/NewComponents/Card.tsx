@@ -10,7 +10,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({  children, onSave, value }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [inputValue, setInputValue] = useState<number>(value);
+  const [inputValue, ] = useState<number>(value);
 
   const handleSave = () => {
     onSave(inputValue);
@@ -23,6 +23,7 @@ const Card: React.FC<CardProps> = ({  children, onSave, value }) => {
       {isOpen && (
         <div className="card-body h-full min-w-[210px]">
           {children}
+          <div onClick={handleSave}></div>
         </div>
       )}
       {!isOpen && <p>{value}</p>}

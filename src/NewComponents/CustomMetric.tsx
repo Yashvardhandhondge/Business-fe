@@ -13,7 +13,7 @@ interface Props {
   setCustomMetrics: Dispatch<SetStateAction<{ metricName: string; metricValue: string; metricType: "X" | "$" | "%" | "N"; notes: string[]; }[]>>;
 }
 
-const CustomMetric: React.FC<Props> = ({ customMetrics, setCustomMetrics, state, updateState }) => {
+const CustomMetric: React.FC<Props> = ({ customMetrics, setCustomMetrics }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [metricName, setMetricName] = useState("");
   const [metricValue, setMetricValue] = useState<number | string>("");

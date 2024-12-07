@@ -24,15 +24,12 @@ const sdeMultipleCard: React.FC<Props> = ({ state, updateState }) => {
   const [askingPrice, setAskingPrice] = useState(state.askingPrice);
   const [sceValue, setSCEValue] = useState(state.sce);
   const [notes, setNotes] = useState("");
-  const [showMessageBox, setShowMessageBox] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
   const handleSaveChanges = () => {
     updateState("sdeMultiple", sdeMultiple);
     updateState("askingPrice", askingPrice);
-    updateState("sce", sceValue);
-    setShowMessageBox(true); 
-    setTimeout(() => setShowMessageBox(false), 3000); 
+
     setIsDialogOpen(false);
   };
 

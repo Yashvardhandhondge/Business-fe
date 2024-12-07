@@ -1,6 +1,6 @@
 import React from "react";
-import { ArrowLeft, LinkIcon, Pencil, Upload } from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, LinkIcon,  Upload } from 'lucide-react';
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -26,6 +26,7 @@ export default function TopBar({ data }: { data: any }) {
       setIsUploading(true);
       try {
         const response = await uploadFile(data?._id, file);
+        console.log(response);
         toast.success("File uploaded successfully!");
         await fetchBusiness(data?._id);
       } catch (error) {
@@ -61,7 +62,7 @@ export default function TopBar({ data }: { data: any }) {
               <Link to={data?.business_url || ""} className="text-sm text-blue-600 hover:underline">
                 {shortenURL(data?.business_url || "")}
               </Link>
-              <Button variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={handleUploadClick}>
+              <Button disabled={isUploading} variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={handleUploadClick}>
                 <Upload className="h-4 w-4" />
                 <span className="sr-only">Upload image</span>
               </Button>

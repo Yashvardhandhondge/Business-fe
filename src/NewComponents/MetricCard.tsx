@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { NotepadText, NotepadTextDashed, Trash2 } from "lucide-react"; // For the delete icon
+import { NotepadText, Trash2 } from "lucide-react"; // For the delete icon
 import Notes from "./Notes";
 
 interface Props {

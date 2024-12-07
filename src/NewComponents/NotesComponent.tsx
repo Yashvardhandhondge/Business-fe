@@ -6,7 +6,7 @@ interface Props {
   updateState: (key: string, value: any) => void;
 }
 
-const NotesComponent: React.FC<Props> = ({ state, updateState }) => {
+const NotesComponent: React.FC<Props> = ({ state }) => {
   const [isOpen, setIsOpen] = useState(false);
 
 

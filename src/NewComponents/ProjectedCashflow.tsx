@@ -24,15 +24,14 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
   const [currentCashflow, setCurrentCashflow] = useState(state.currentCashflow);
   const [totalDebtPayments, setTotalDebtPayments] = useState(state.totalDebtPayments);
   const [notes, setNotes] = useState("");
-  const [showMessageBox, setShowMessageBox] = useState(false);
+
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
   const handleSaveChanges = () => {
     updateState("projectedCashflow", projectedCashflow);
     updateState("currentCashflow", currentCashflow);
     updateState("totalDebtPayments", totalDebtPayments);
-    setShowMessageBox(true); 
-    setTimeout(() => setShowMessageBox(false), 3000); 
+
     setIsDialogOpen(false);
   };
 

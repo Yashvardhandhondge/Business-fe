@@ -24,15 +24,14 @@ const GrossMultipleCard: React.FC<Props> = ({ state, updateState }) => {
   const [askingPrice, setAskingPrice] = useState(state.askingPrice);
   const [grossRevenue, setGrossRevenue] = useState(state.grossRevenue);
   const [notes, setNotes] = useState("");
-  const [showMessageBox, setShowMessageBox] = useState(false);
+  
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
   const handleSaveChanges = () => {
     updateState("grossMultiple", grossMultiple);
     updateState("askingPrice", askingPrice);
     updateState("grossRevenue", grossRevenue);
-    setShowMessageBox(true); 
-    setTimeout(() => setShowMessageBox(false), 3000); 
+    
     setIsDialogOpen(false);
   };
 

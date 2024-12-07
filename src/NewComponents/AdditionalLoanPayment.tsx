@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { NotepadText } from "lucide-react";
-import { Trash2 } from "lucide-react";
+
 import Notes from "./Notes";
 // import { MessageCircle } from 'lucide-react';
 
@@ -20,7 +20,7 @@ interface Props {
   updateAdditionalLoan: (value: { amount: number; term: number; rate: number }) => void;
 }
 
-const AdditionalLoanPayment: React.FC<Props> = ({ state, updateState, updateAdditionalLoan }) => {
+const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [additionalLoanPayment, setAdditionalLoanPayment] = useState(state.additionalLoanPayment);
   const [additionalLoanAmount, setAdditionalLoanAmount] = useState(state.additional_loan_amount);

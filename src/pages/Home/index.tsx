@@ -1,9 +1,9 @@
 
 import {Link} from 'react-router-dom'
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BarChart3, LineChart, PieChart, ArrowRight, Facebook, Twitter, LinkedinIcon as LinkedIn } from 'lucide-react'
+import { BarChart3, LineChart, PieChart,  Facebook, Twitter, LinkedinIcon as LinkedIn } from 'lucide-react'
 
 export default function LandingPage() {
   return (
