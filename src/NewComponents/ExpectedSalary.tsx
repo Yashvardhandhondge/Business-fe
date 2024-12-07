@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -23,6 +23,10 @@ const ExpectedSalary: React.FC<Props> = ({ state, updateState }) => {
   const [salary, setSalary] = useState<number>(state.expectedSalary); 
   const [notes, setNotes] = useState<string>(""); 
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(()=>{
+    setSalary(state.expectedSalary)
+  },[state])
 
  
   const handleSaveChanges = () => {

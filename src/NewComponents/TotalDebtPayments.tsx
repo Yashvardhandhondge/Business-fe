@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -23,13 +23,22 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
   const [totalDebtPayments, setTotalDebtPayments] = useState(state.totalDebtPayments);
   const [sbaLoanPayment, setSbaLoanPayment] = useState(state.sbaLoanPayment);
   const [additionalLoanPayment, setAdditionalLoanPayment] = useState(state.additionalLoanPayment);
+  const [additionalDebt, setAdditionalDebt] = useState(state.additionalDebt);
   const [notes, setNotes] = useState("");
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setTotalDebtPayments(state.totalDebtPayments);
+    setSbaLoanPayment(state.sbaLoanPayment);
+    setAdditionalLoanPayment(state.additionalLoanPayment);
+    setAdditionalDebt(state.additionalDebt);
+  } ,[state]);
 
   const handleSaveChanges = () => {
     updateState("totalDebtPayments", totalDebtPayments);
     updateState("sbaLoanPayment", sbaLoanPayment);
     updateState("additionalLoanPayment", additionalLoanPayment);
+    updateState("additionalDebt", additionalDebt);
     setIsDialogOpen(false);
   };
 
@@ -68,10 +77,12 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
               id="totalDebtPayments"
               type="number"
               value={totalDebtPayments}
+              disabled
               onChange={(e) => setTotalDebtPayments(parseFloat(e.target.value))}
-              placeholder="Enter Total Debt Payments"
+              placeholder="Auto Calculated"
               className="w-full"
             />
+            
             <label className="font-semibold" htmlFor="sbaLoanPayment">
               SBA Loan Payment
             </label>
@@ -92,6 +103,17 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
               value={additionalLoanPayment}
               onChange={(e) => setAdditionalLoanPayment(parseFloat(e.target.value))}
               placeholder="Enter Additional Loan Payment"
+              className="w-full"
+            />
+            <label className="font-semibold" htmlFor="sbaLoanPayment">
+              Additional Debt
+            </label>
+            <Input
+              id="sbaLoanPayment"
+              type="number"
+              value={additionalDebt}
+              onChange={(e) => setAdditionalDebt(parseFloat(e.target.value))}
+              placeholder="Enter Additional Debt"
               className="w-full"
             />
             <label className="font-semibold" htmlFor="notes">

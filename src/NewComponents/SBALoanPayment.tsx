@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -29,8 +29,15 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
   const [loanAmount, setLoanAmount] = useState(state.loan_sba_amount);
   const [loanRate, setLoanRate] = useState(state.loan_sba_rate);
   const [loanTerm, setLoanTerm] = useState(state.loan_sba_term);
-  const [notes, setNotes] = useState([""]);
+  const [notes, setNotes] = useState("");
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoanPayment(state.sbaLoanPayment);
+    setLoanAmount(state.loan_sba_amount);
+    setLoanRate(state.loan_sba_rate);
+    setLoanTerm(state.loan_sba_term);
+  }, [state]);
 
   const handleSaveChanges = () => {
     updateLoanSba({amount: loanAmount, term: loanTerm, rate: loanRate});
@@ -42,7 +49,7 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
     setLoanAmount(state.loan_sba_amount);
     setLoanRate(state.loan_sba_rate);
     setLoanTerm(state.loan_sba_term);
-    setNotes([]);
+    setNotes("");
     setIsDialogOpen(false);
   };
 
@@ -79,6 +86,18 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             <DialogTitle>Edit SBA Loan Payment Card</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
+          <label className="font-semibold" htmlFor="loanAmount">
+              SBA Loan Payment (/year)
+            </label>
+            <Input
+              id="loanAmount"
+              type="number"
+              disabled
+              value={loanPayment}
+              onChange={(e) => setLoanPayment(parseFloat(e.target.value))}
+              placeholder="auto calculated"
+              className="w-full"
+            />
             <label className="font-semibold" htmlFor="loanAmount">
               Loan Amount
             </label>
@@ -119,7 +138,7 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             <Textarea
               id="notes"
               value={notes}
-              onChange={(e) => setNotes([...notes,e.target.value])}
+              onChange={(e) => setNotes(e.target.value)}
               placeholder="Add notes here..."
               className="w-full"
             />

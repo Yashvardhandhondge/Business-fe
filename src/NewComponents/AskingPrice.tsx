@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import {
   Dialog,
   DialogTrigger,
@@ -24,6 +24,10 @@ const AskingPriceCard: React.FC<Props> = ({ state, updateState }) => {
   const [notes, setNotes] = useState<string[]>(state.notes.askingPrice); // Notes input state
  
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setAskingPrice(state.askingPrice); 
+  },[state])
 
   // Save changes and update parent state
   const handleSaveChanges = () => {

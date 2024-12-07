@@ -54,6 +54,8 @@ const App: React.FC = () => {
     additional_loan_term:0,
     additional_loan_rate:0,
     additional_loan_amount:0,
+    newExpenses:0,
+    additionalDebt: 0,
     notes: {
       currentCashflow: ["Notes for currentCashflow"],
       expectedSalary: ["Notes for expectedSalary"],
@@ -112,7 +114,7 @@ const App: React.FC = () => {
         additional_loan_term: data?.business?.data?.additional_loan.term || 0,
         additional_loan_rate: data?.business?.data?.additional_loan.rate || 0,
         additionalLoanPayment: data?.business?.data?.additional_loan.amount || 0,
-        totalDebtPayments: (data?.business?.data?.loan_sba.amount + data?.business?.data?.additional_loan.amount) || 0,
+        totalDebtPayments: data?.business?.data?.total_debt_payments.value || 0,
         projectedNetProfitMargin: data?.business?.metrics?.net_profit_margin || 0,
         dscr: data?.business?.metrics?.dscr || 0,
         grossMultiple: data?.business?.metrics?.equiity_multiple || 0,
@@ -120,6 +122,8 @@ const App: React.FC = () => {
         sde: data?.business?.data?.sde.value || 0,
         projectedCashflow: data?.business?.data?.projected_cashflow.value || 0,
         loan_sba_amount: data?.business?.data?.loan_sba.amount || 0,
+        newExpenses: data?.business?.data?.new_expenses || 0,
+        additionalDebt: data?.business?.data?.additional_debt || 0,
         notes:{
           ...state.notes,
           currentCashflow: data?.business?.data?.current_cashflow.notes || ["Notes for currentCashflow"],
@@ -168,6 +172,8 @@ const App: React.FC = () => {
           sde: business?.sde.value || 0,
           projectedCashflow: business?.projected_cashflow.value || 0,
           loan_sba_amount: business?.loan_sba.amount || 0,
+          newExpenses: business?.new_expenses || 0,
+          additionalDebt: business?.additional_debt || 0,
           notes:{
           ...state.notes,
           currentCashflow: business?.current_cashflow.notes || ["Notes for currentCashflow"],
@@ -208,13 +214,13 @@ const App: React.FC = () => {
       const additionalLoanPayment = calculateYearlyPayment(state.additional_loan_amount, state.additional_loan_term, state.additional_loan_rate);
       const sbaLoanPayment = calculateYearlyPayment(state.loan_sba_amount, state.loan_sba_term, state.loan_sba_rate);
 
-      const totalDebtPayments = Number((sbaLoanPayment + additionalLoanPayment).toFixed(2)) || 0; 
+      
       
       const dscr = state.totalDebtPayments > 0 
-        ? Number(((state.currentCashflow + state.expectedSalary) / state.totalDebtPayments).toFixed(2))
+        ? Number(((state.currentCashflow + state.expectedSalary) / state.totalDebtPayments).toFixed(4))
         : 0;
   
-      const projectedCashflow = state.currentCashflow - state.totalDebtPayments;
+      const projectedCashflow = state.currentCashflow - state.totalDebtPayments - state.newExpenses;
   
       const grossMultiple = state.grossRevenue > 0 
         ? Number((state.askingPrice / state.grossRevenue).toFixed(2))
@@ -232,7 +238,7 @@ const App: React.FC = () => {
   
       setState((prevState) => ({
         ...prevState,
-        totalDebtPayments,
+        // totalDebtPayments,
         dscr,
         projectedCashflow,
         grossMultiple,
@@ -254,7 +260,20 @@ const App: React.FC = () => {
     state.sde,
     state.loan_sba_amount,
     state.additional_loan_amount,
+    state.newExpenses,
+    state.additionalDebt
   ]);
+
+  useEffect(() => {
+    const totalDebtPayments = Number((state.sbaLoanPayment + state.additionalLoanPayment).toFixed(2)) || 0; 
+    setState((prevState) => ({
+      ...prevState,
+      totalDebtPayments
+    }))
+  },[
+    state.additionalLoanPayment,
+    state.sbaLoanPayment,
+  ])
   
   const handleSave = async () => {
    
@@ -274,6 +293,8 @@ const App: React.FC = () => {
       total_debt_payments: {value: state.totalDebtPayments},
       sba_loan_payment: {value: state.sbaLoanPayment},
       additional_loan_payment: {value: state.additionalLoanPayment},
+      new_expenses: {value:state.newExpenses},
+      additional_debt: {value:state.additionalDebt}
     };
 
     if(customMetrics.length >= 0){

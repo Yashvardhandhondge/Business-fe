@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -23,6 +23,10 @@ const GrossRevenue: React.FC<Props> = ({ state, updateState }) => {
   const [revenue, setRevenue] = useState<number>(state.grossRevenue); 
   const [notes, setNotes] = useState<string>(""); 
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(()=>{
+    setRevenue(state.grossRevenue)
+  },[state])
 
   
   const handleSaveChanges = () => {

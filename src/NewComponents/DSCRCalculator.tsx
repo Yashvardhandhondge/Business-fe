@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -27,11 +27,16 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
 
+  useEffect(() => {
+    setDscrCurrentCashflow(state.currentCashflow);
+    setExpectedSalary(state.expectedSalary);
+    setTotalDebtPayment(state.totalDebtPayments);
+  },[state]);
 
   const handleSaveChanges = () => {
     updateState("currentCashflow", dscrCurrentCashflow);
     updateState("expectedSalary", expectedSalary);
-    updateState("totalDebtPayment", totalDebtPayment);
+    updateState("totalDebtPayments", totalDebtPayment);
     setShowMessageBox(true);
     setTimeout(() => setShowMessageBox(false), 3000); 
     setIsDialogOpen(false);

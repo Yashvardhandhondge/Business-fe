@@ -148,13 +148,13 @@ export default function HomePage() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Add New Business</DialogTitle>
+              <DialogTitle className='text-center flex items-center'>Add New Business</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
               <div className="grid gap-4 py-4">
                 {['business_name', 'business_location', 'business_url', 'current_cashflow', 'asking_price'].map((field) => (
-                  <div className="grid grid-cols-4 items-center gap-4" key={field}>
-                    <Label htmlFor={field} className="text-right capitalize">
+                  <div className="grid items-center gap-4" key={field}>
+                    <Label htmlFor={field} className="capitalize">
                       {field.replace('_', ' ')}
                     </Label>
                     <Input
@@ -163,6 +163,7 @@ export default function HomePage() {
                       type={field === 'current_cashflow' || field === 'asking_price' ? 'number' : 'text'}
                       value={(field === 'current_cashflow' || field === 'asking_price') ? (newBusiness[field] as { value?: number })?.value : newBusiness[field as keyof Business] as string | number | undefined}
                       onChange={handleInputChange}
+                      placeholder={'Enter '+field.replace('_', ' ')}
                       className="col-span-3"
                     />
                   </div>

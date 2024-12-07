@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -26,6 +26,12 @@ const GrossMultipleCard: React.FC<Props> = ({ state, updateState }) => {
   const [notes, setNotes] = useState("");
   
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(()=>{
+    setGrossMultiple(state.grossMultiple);
+    setAskingPrice(state.askingPrice);
+    setGrossRevenue(state.grossRevenue);
+  },[state])
 
   const handleSaveChanges = () => {
     updateState("grossMultiple", grossMultiple);
@@ -67,7 +73,7 @@ const GrossMultipleCard: React.FC<Props> = ({ state, updateState }) => {
                 <NotepadText className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-2xl text-blue-500">{` ${state.askingPrice / state.grossRevenue} `}</p>
+            <p className="text-2xl text-blue-500">{` ${grossMultiple.toFixed(2)} `}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -25,6 +25,12 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
   const [grossRevenue, setGrossRevenue] = useState(state.grossRevenue);
   const [notes, setNotes] = useState("");
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setNetProfitMargin(state.projectedNetProfitMargin);
+    setProjectedCashflow(state.projectedCashflow);
+    setGrossRevenue(state.grossRevenue);
+  }, [state]);
 
   const handleSaveChanges = () => {
     updateState("projectedNetProfitMargin", netProfitMargin);
@@ -68,8 +74,9 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
               id="netProfitMargin"
               type="number"
               value={netProfitMargin}
+              disabled
               onChange={(e) => setNetProfitMargin(parseFloat(e.target.value))}
-              placeholder="Enter Projected Net Profit Margin"
+              placeholder="auto calculated"
               className="w-full"
             />
             <label className="font-semibold" htmlFor="projectedCashflow">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -13,7 +13,7 @@ import { NotepadText } from "lucide-react";
 import Notes from "./Notes";
 
 interface CurrentCashflowProps {
-  state: { currentCashflow: number, notes: {currentCashflow: string[]} }; 
+  state:any; 
   updateState: (key: string, value: number) => Promise<void>; 
   updateNotes: (key: string, value: string) => Promise<void>
 }
@@ -25,13 +25,20 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
 }) => {
   
   const [cashflow, setCashflow] = useState<number>(state.currentCashflow);
+  const [newExpenses, setNewExpenses] = useState<number>(state.newExpenses);
   const [notes, setNotes] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    setCashflow(state.currentCashflow);
+    setNewExpenses(state.newExpenses);
+  }, [state]);
+
   const handleSaveChanges = async () => {
     await updateState("currentCashflow", cashflow);
     await updateNotes("currentCashflow", notes);
+    await updateState("newExpenses", newExpenses);
     setNotes(""); 
     setIsDialogOpen(false); 
   };
@@ -39,6 +46,7 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
  
   const handleCancel = () => {
     setCashflow(state.currentCashflow); 
+    setNewExpenses(state.newExpenses);
     setNotes(""); 
     setIsDialogOpen(false); 
   };
@@ -74,6 +82,17 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
               type="number"
               value={cashflow}
               onChange={(e) => setCashflow(Number(e.target.value))}
+              className="w-full"
+            />
+            <label className="font-semibold" htmlFor="cashflow">
+              New Expenses
+            </label>
+            <Input
+              id="expenses"
+              type="number"
+              value={newExpenses}
+              onChange={(e) => setNewExpenses(Number(e.target.value))}
+              placeholder="Enter new expenses" 
               className="w-full"
             />
 

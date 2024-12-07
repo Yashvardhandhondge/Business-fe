@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -23,15 +23,23 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
   const [projectedCashflow, setProjectedCashflow] = useState(state.projectedCashflow);
   const [currentCashflow, setCurrentCashflow] = useState(state.currentCashflow);
   const [totalDebtPayments, setTotalDebtPayments] = useState(state.totalDebtPayments);
+  const [newExpenses, setNewExpenses] = useState(state.newExpenses);
   const [notes, setNotes] = useState("");
 
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(()=>{
+    setProjectedCashflow(state.projectedCashflow);
+    setCurrentCashflow(state.currentCashflow);
+    setTotalDebtPayments(state.totalDebtPayments);
+    setNewExpenses(state.newExpenses);
+  },[state])
 
   const handleSaveChanges = () => {
     updateState("projectedCashflow", projectedCashflow);
     updateState("currentCashflow", currentCashflow);
     updateState("totalDebtPayments", totalDebtPayments);
-
+    updateState("newExpenses", newExpenses);
     setIsDialogOpen(false);
   };
 
@@ -70,8 +78,9 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
               id="projectedCashflow"
               type="number"
               value={projectedCashflow}
+              disabled
               onChange={(e) => setProjectedCashflow(Number(e.target.value))}
-              placeholder="Enter projected cashflow"
+              placeholder="auto calculated"
               className="w-full"
             />
             <label className="font-semibold" htmlFor="currentCashflow">
@@ -85,6 +94,17 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
               placeholder="Enter current cashflow"
               className="w-full"
             />
+            <label className="font-semibold" htmlFor="cashflow">
+              New Expenses
+            </label>
+            <Input
+              id="expenses"
+              type="number"
+              value={newExpenses}
+              onChange={(e) => setNewExpenses(Number(e.target.value))}
+              placeholder="Enter new expenses" 
+              className="w-full"
+            />
             <label className="font-semibold" htmlFor="totalDebtPayments">
               Total Debt Payments
             </label>
@@ -92,6 +112,7 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
               id="totalDebtPayments"
               type="number"
               value={totalDebtPayments}
+              disabled
               onChange={(e) => setTotalDebtPayments(Number(e.target.value))}
               placeholder="Enter total debt payments"
               className="w-full"

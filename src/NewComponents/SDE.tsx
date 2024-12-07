@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -24,6 +24,10 @@ const SDE: React.FC<Props> = ({ state, updateState }) => {
   const [notes, setNotes] = useState("");
   const [showMessageBox, setShowMessageBox] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setSDE(state.sde);
+  }, [state]);
 
   const handleSaveChanges = () => {
     updateState("sde", sde);
