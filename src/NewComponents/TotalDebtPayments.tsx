@@ -23,7 +23,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
   const [totalDebtPayments, setTotalDebtPayments] = useState(state.totalDebtPayments);
   const [sbaLoanPayment, setSbaLoanPayment] = useState(state.sbaLoanPayment);
   const [additionalLoanPayment, setAdditionalLoanPayment] = useState(state.additionalLoanPayment);
-  const [additionalDebt, setAdditionalDebt] = useState(state.additionalDebt);
+  // const [additionalDebt, setAdditionalDebt] = useState(state.additionalDebt);
   const [notes, setNotes] = useState("");
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
@@ -31,14 +31,14 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
     setTotalDebtPayments(state.totalDebtPayments);
     setSbaLoanPayment(state.sbaLoanPayment);
     setAdditionalLoanPayment(state.additionalLoanPayment);
-    setAdditionalDebt(state.additionalDebt);
+    // setAdditionalDebt(state.additionalDebt);
   } ,[state]);
 
   const handleSaveChanges = () => {
     updateState("totalDebtPayments", totalDebtPayments);
     updateState("sbaLoanPayment", sbaLoanPayment);
     updateState("additionalLoanPayment", additionalLoanPayment);
-    updateState("additionalDebt", additionalDebt);
+    // updateState("additionalDebt", additionalDebt);
     setIsDialogOpen(false);
   };
 
@@ -90,6 +90,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
               id="sbaLoanPayment"
               type="number"
               value={sbaLoanPayment}
+              disabled
               onChange={(e) => setSbaLoanPayment(parseFloat(e.target.value))}
               placeholder="Enter SBA Loan Payment"
               className="w-full"
@@ -100,12 +101,13 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
             <Input
               id="additionalLoanPayment"
               type="number"
+              disabled
               value={additionalLoanPayment}
               onChange={(e) => setAdditionalLoanPayment(parseFloat(e.target.value))}
               placeholder="Enter Additional Loan Payment"
               className="w-full"
             />
-            <label className="font-semibold" htmlFor="sbaLoanPayment">
+            {/* <label className="font-semibold" htmlFor="sbaLoanPayment">
               Additional Debt
             </label>
             <Input
@@ -115,7 +117,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
               onChange={(e) => setAdditionalDebt(parseFloat(e.target.value))}
               placeholder="Enter Additional Debt"
               className="w-full"
-            />
+            /> */}
             <label className="font-semibold" htmlFor="notes">
               Notes
             </label>

@@ -22,6 +22,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
   const [dscrCurrentCashflow, setDscrCurrentCashflow] = useState(state.currentCashflow);
   const [expectedSalary, setExpectedSalary] = useState(state.expectedSalary);
   const [totalDebtPayment, setTotalDebtPayment] = useState(state.totalDebtPayments);
+  const [dscr, setDscr] = useState(state.dscr);
   const [notes, setNotes] = useState("");
   const [showMessageBox, setShowMessageBox] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
@@ -31,12 +32,14 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
     setDscrCurrentCashflow(state.currentCashflow);
     setExpectedSalary(state.expectedSalary);
     setTotalDebtPayment(state.totalDebtPayments);
+    setDscr(state.dscr);
   },[state]);
 
   const handleSaveChanges = () => {
     updateState("currentCashflow", dscrCurrentCashflow);
     updateState("expectedSalary", expectedSalary);
     updateState("totalDebtPayments", totalDebtPayment);
+    updateState("dscr", dscr);
     setShowMessageBox(true);
     setTimeout(() => setShowMessageBox(false), 3000); 
     setIsDialogOpen(false);
@@ -76,7 +79,19 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
           <div className="grid gap-4 py-4">
             {/* Input for DSCR Current Cashflow */}
             <label className="font-semibold" htmlFor="dscrCurrentCashflow">
-              DSCR Current Cashflow
+              DSCR
+            </label>
+            <Input
+              id="dscr"
+              type="number"
+              value={dscr}
+              onChange={(e) => setDscr(Number(e.target.value))}
+              placeholder="Enter DSCR current cashflow"
+              className="w-full"
+            />
+
+            <label className="font-semibold" htmlFor="dscrCurrentCashflow">
+              Current Cashflow
             </label>
             <Input
               id="currentCashflow"
@@ -108,6 +123,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
               id="totalDebtPayment"
               type="number"
               value={totalDebtPayment}
+              disabled
               onChange={(e) => setTotalDebtPayment(Number(e.target.value))}
               placeholder="Enter total debt payment"
               className="w-full"
