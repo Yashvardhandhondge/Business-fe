@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowLeft, LinkIcon,  PencilIcon,  Upload, X } from 'lucide-react';
+import { ArrowLeft, LinkIcon,  Loader2,  PencilIcon,  Upload, X } from 'lucide-react';
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +21,7 @@ export default function TopBar({ data }: { data: any }) {
   const [notes, setNotes] = React.useState("");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   React.useEffect(() => {
     if(data){
@@ -42,7 +42,9 @@ export default function TopBar({ data }: { data: any }) {
     setShowNotesModal(false);
   }
 
-  const handleUploadClick = () => fileInputRef.current?.click();
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  }
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -50,10 +52,10 @@ export default function TopBar({ data }: { data: any }) {
       setIsUploading(true);
       try {
         const response = await uploadFile(data?._id, file);
-        console.log(response);
+        console.log("file response"+JSON.stringify(response));
         toast.success("File uploaded successfully!");
         await fetchBusiness(data?._id);
-        navigate(`/business/${data?._id}`);
+        window.location.reload();
       } catch (error) {
         toast.error("Failed to upload file. Please try again.");
       } finally {
@@ -114,10 +116,18 @@ export default function TopBar({ data }: { data: any }) {
               <a href={(data?.business_url.startsWith("https://") ? data?.business_url : "https://"+data?.business_url) || ""} target="blank" className="text-sm text-blue-600 hover:underline">
                 {shortenURL(data?.business_url || "")}
               </a>
-              <Button disabled={isUploading} variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={handleUploadClick}>
-                <Upload className="h-4 w-4" />
-                <span className="sr-only">Upload image</span>
-              </Button>
+              
+                {
+                  isUploading ? (
+                    <Loader2 className="animate-spin" />
+                  ):(
+                    <Button disabled={isUploading} variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={handleUploadClick}>
+                      <Upload className="h-4 w-4" />
+                      <span className="sr-only">Upload image</span>
+                  </Button>
+                  )
+                }
+                
             </div>
            
           </CardContent>

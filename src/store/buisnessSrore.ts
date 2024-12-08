@@ -133,15 +133,7 @@ const useBusinessStore = create<BusinessState>((set) => ({
       const formData = new FormData();  
       formData.append('file', file);
       const presignedResponse = await axios.post(`${API_URL}/business/upload/${businessId}`, formData);
-      const { presignedUrl, fileUrl } = presignedResponse.data;
-  
-      // Step 2: Upload the file to S3
-      await axios.put(presignedUrl, file, {
-        headers: { "Content-Type": file.type },
-      });
-  
-      // Step 3: Save the file URL to the backend
-      await axios.post(`${API_URL}/business/attachment/${businessId}`, { fileUrl });
+      const { fileUrl } = presignedResponse.data;
   
       set({ isLoading: false });
       return fileUrl;
