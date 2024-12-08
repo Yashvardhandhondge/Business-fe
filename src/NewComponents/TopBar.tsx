@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import useBusinessStore from "../store/buisnessSrore";
 import FilesModal from "./FilesModal";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
 
 function shortenURL(url: string, maxLength = 30): string {
   return url.length > maxLength ? `${url.slice(0, maxLength)}...` : url;
@@ -19,6 +20,8 @@ export default function TopBar({ data }: { data: any }) {
   const [showNotesModal, setShowNotesModal] = React.useState(false);
   const [notes, setNotes] = React.useState("");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if(data){
@@ -50,6 +53,7 @@ export default function TopBar({ data }: { data: any }) {
         console.log(response);
         toast.success("File uploaded successfully!");
         await fetchBusiness(data?._id);
+        navigate(`/business/${data?._id}`);
       } catch (error) {
         toast.error("Failed to upload file. Please try again.");
       } finally {

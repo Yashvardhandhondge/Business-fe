@@ -41,14 +41,26 @@ export default function HomePage() {
       try {
         const allBusinesses = await fetchAllBusiness();
         setBusinesses(allBusinesses.businesses);
+        if(localStorage.getItem('business_payload')){
+          const business = JSON.parse(localStorage.getItem('business_payload') || '');
+          setBusinesses(prev => [...prev,business]);
+        }
       } catch (error) {
         console.error('Error fetching businesses:', error);
       } finally {
         setIsPageLoading(false);
       }
     };
-    if (userId) fetchData();
-    else setIsPageLoading(false);
+    if (userId){
+      fetchData();
+      
+    }else{
+      if(localStorage.getItem('business')){
+        const business = JSON.parse(localStorage.getItem('business') || '');
+        setBusinesses([business]);
+      }
+    };
+    setIsPageLoading(false);
   }, [fetchAllBusiness, userId]);
 
   const handleAddBusiness = () => {

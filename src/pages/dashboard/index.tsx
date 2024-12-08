@@ -546,7 +546,10 @@ const App: React.FC = () => {
           value={state.sde}
           onSave={(value) => updateState("sde", value)}
         >
-          <MetricCard state={customMetrics[0]} updateMetric={setCustomMetrics} deleteCard={(name) => setCustomMetrics(customMetrics.filter((metric) => metric.metricName !== name))} />
+          <MetricCard state={customMetrics[0]} updateMetric={setCustomMetrics} deleteCard={(name) => {
+            setHasChanges(true)
+            setCustomMetrics(customMetrics.filter((metric) => metric.metricName !== name))
+          }} />
         </Card>
             
         );
