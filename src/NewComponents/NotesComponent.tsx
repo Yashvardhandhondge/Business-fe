@@ -57,8 +57,9 @@ const NotesComponent: React.FC<Props> = ({ state }) => {
             <h4 className="font-medium text-gray-600">
               {key.replace(/([A-Z])/g, " $1").toUpperCase()}
             </h4>
-            {Array.isArray(noteArray) && noteArray.length > 0 ? (
-              noteArray.map((note, index) => (
+            
+            {
+              key !== 'business' && Array.isArray(noteArray) && noteArray.map((note: string, index: number) => (
                 <p
                   key={index}
                   className="px-3 py-2 bg-gray-100 rounded-md text-sm text-gray-700"
@@ -66,9 +67,16 @@ const NotesComponent: React.FC<Props> = ({ state }) => {
                   {note}
                 </p>
               ))
-            ) : (
-              <p className="text-gray-500 italic">No notes available</p>
-            )}
+            }
+            
+            {
+              key == 'business' && (<p
+                key={'business'}
+                className="px-3 py-2 bg-gray-100 rounded-md text-sm text-gray-700"
+              >
+                {state.notes.business}
+              </p>)
+            }
           </div>
         ))}
 

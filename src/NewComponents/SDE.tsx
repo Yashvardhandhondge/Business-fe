@@ -54,7 +54,7 @@ const SDE: React.FC<Props> = ({ state, updateState }) => {
         <DialogTrigger asChild>
           <div className="bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-lg h-full  relative">
           <div className="flex gap-2justify-between items-center">
-              <h3 className="flex-1">SDE Value</h3>
+              <h3 className="flex-1">SDE/EBIDTA</h3>
               <button className="text-sm text-gray-500 mx-2" onClick={(e) => {e.stopPropagation(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" />
               </button>
@@ -64,11 +64,11 @@ const SDE: React.FC<Props> = ({ state, updateState }) => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit SDE Value</DialogTitle>
+            <DialogTitle>Edit SDE/EBIDTA Value</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <label className="font-semibold" htmlFor="sde">
-              SDE Value
+              SDE/EBIDTA Value
             </label>
             <Input
               id="sde"

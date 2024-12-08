@@ -71,6 +71,7 @@ const App: React.FC = () => {
       dscr: ["Notes for dscr"],
       grossMultiple: ["Notes for grossMultiple"],
       sdeMultiple: ["Notes for sdeMultiple"],
+      business: ["Notes for business"],
     }
   });
 
@@ -130,6 +131,7 @@ const App: React.FC = () => {
           expectedSalary: data?.business?.data?.expected_salary?.notes || ["Notes for expectedSalary"],
           grossRevenue: data?.business?.data?.gross_revenue?.notes || ["Notes for grossRevenue"],
           askingPrice: data?.business?.data?.asking_price?.notes || ["Notes for askingPrice"],
+          business: data?.business?.data?.business_notes || ["Notes for business"],
           // sde: data?.business?.data?.sde.notes || ["Notes for sde"],
           // projectedCashflow: data?.business?.data?.projected_cashflow.notes || ["Notes for projectedCashflow"],
           // totalDebtPayments: data?.business?.data?.loan_sba.notes || ["Notes for totalDebtPayments"],
@@ -180,6 +182,7 @@ const App: React.FC = () => {
           expectedSalary: business?.data?.expected_salary.notes || ["Notes for expectedSalary"],
           grossRevenue: business?.gross_revenue.notes || ["Notes for grossRevenue"],
           askingPrice: business?.asking_price.notes || ["Notes for askingPrice"],
+          business: business?.business_notes || ["Notes for business"],
           }
         })
       }
@@ -217,7 +220,7 @@ const App: React.FC = () => {
       
       
       const dscr = state.totalDebtPayments > 0 
-        ? Number(((state.currentCashflow + state.expectedSalary) / state.totalDebtPayments).toFixed(4))
+        ? Number(((state.currentCashflow - state.expectedSalary) / state.totalDebtPayments).toFixed(4))
         : 0;
   
       const projectedCashflow = state.currentCashflow - state.totalDebtPayments - state.newExpenses;
@@ -553,7 +556,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container min-h-screen bg-blue-50">
+    <div className="app-container min-h-screen bg-gradient-to-br from-violet-600 to-teal-400">
       <TopBar data={businessData?.data} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="metrics-grid">
@@ -568,7 +571,7 @@ const App: React.FC = () => {
                 padding: "12px",
                 minHeight: "100px",
               }}
-              className="bg-blue-50 rounded-lg"
+              className="bg-gradient-to-br from-violet-600 to-teal-400 rounded-lg"
             >
               {metricCards
                 .filter(
