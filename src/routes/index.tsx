@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react';
 import React, { Suspense } from 'react';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,7 +16,12 @@ const Home = React.lazy(()=> import('../pages/Home/index'))
 const Router: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>  
+
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="animate-spin text-primary h-8 w-8" />
+      </div>
+    </div>}>
         <Routes>
           <Route path="/addbusiness" element={<AddBusiness />} />
           <Route path="/" element={<Home />} />

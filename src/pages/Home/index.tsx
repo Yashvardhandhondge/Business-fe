@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { BarChart2, PieChart, TrendingUp } from 'lucide-react'
+import { BarChart2, Loader2, PieChart, TrendingUp } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 export default function LandingPage() {
@@ -17,7 +17,13 @@ export default function LandingPage() {
   }, [])
 
   if (!mounted) {
-    return null
+    
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="animate-spin text-primary h-8 w-8" />
+        </div>
+      );
+    
   }
 
   return (
