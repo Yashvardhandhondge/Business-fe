@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion,} from 'framer-motion'
 import { BarChart2, Loader2, PieChart, TrendingUp } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
