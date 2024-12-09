@@ -69,7 +69,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
                 <NotepadText className="w-4 h-4" />
               </button>
             </div>  
-            <p className="text-2xl text-blue-500">{`DSCR: ${state.dscr}`}</p>
+            <p className="text-2xl text-blue-500">{` ${state.dscr}`}</p>
           </div>
         </DialogTrigger>
         <DialogContent>
