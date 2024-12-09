@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom'
 
 export default function LandingPage() {
   const [mounted, setMounted] = useState(false)
-  const { scrollYProgress } = useScroll()
+  // const { scrollYProgress } = useScroll()
   const navigate = useNavigate()
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
+  // const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  // const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
 
   useEffect(() => {
     setMounted(true)
@@ -139,29 +139,29 @@ function FeatureCard({ title, description, icon: Icon, index }:{
   )
 }
 
-function HeroAnimation() {
-  return (
-    <svg width="200" height="200" viewBox="0 0 200 200">
-      <motion.circle
-        cx="100"
-        cy="100"
-        r="80"
-        stroke="#ffffff"
-        strokeWidth="20"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.path
-        d="M40,100 L80,140 L160,60"
-        stroke="#ffffff"
-        strokeWidth="20"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1.5, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </svg>
-  )
-}
+// function HeroAnimation() {
+//   return (
+//     <svg width="200" height="200" viewBox="0 0 200 200">
+//       <motion.circle
+//         cx="100"
+//         cy="100"
+//         r="80"
+//         stroke="#ffffff"
+//         strokeWidth="20"
+//         fill="none"
+//         initial={{ pathLength: 0 }}
+//         animate={{ pathLength: 1 }}
+//         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+//       />
+//       <motion.path
+//         d="M40,100 L80,140 L160,60"
+//         stroke="#ffffff"
+//         strokeWidth="20"
+//         fill="none"
+//         initial={{ pathLength: 0 }}
+//         animate={{ pathLength: 1 }}
+//         transition={{ duration: 1.5, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
+//       />
+//     </svg>
+//   )
+// }
