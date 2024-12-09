@@ -28,22 +28,16 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 text-white">
-      <header className="container mx-auto px-4 py-8">
-        <nav className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Business</h1>
-          
-        </nav>
-      </header>
+   
 
       <main>
-        <section className="container mx-auto px-4 py-20 text-center">
+        <section className="container min-h-screen flex items-center justify-center mx-auto px-4 py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-5xl font-bold mb-4">Simplify Your Business Evaluations</h2>
-            <p className="text-xl mb-8">Accurately calculate business metrics, manage multiple businesses, and make data-driven decisions effortlessly.</p>
+            <h2 className="text-5xl font-bold mb-4">Welcome !</h2>
             <div className="space-x-4">
               <button onClick={()=> navigate("/signup")} className="bg-white text-blue-500 px-6 py-3 rounded-full font-semibold text-lg hover:bg-opacity-90 transition duration-300">
                 Sign Up
@@ -58,14 +52,14 @@ export default function LandingPage() {
           </motion.div>
         </section>
 
-        <section className="container mx-auto px-4 py-20">
+        {/* <section className="container mx-auto px-4 py-20">
           <motion.div
             style={{ opacity, scale }}
             className="flex justify-center items-center"
           >
             <HeroAnimation />
           </motion.div>
-        </section>
+        </section> */}
 
         <section className="container mx-auto px-4 py-20">
           <h3 className="text-3xl font-bold text-center mb-12">Key Features</h3>

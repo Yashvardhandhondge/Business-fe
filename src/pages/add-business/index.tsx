@@ -153,14 +153,14 @@ export default function HomePage() {
   }
 
   return (
-    <div className="container mx-auto p-6 bg-gradient-to-br from-violet-600 to-teal-400 min-h-screen relative">
+    <div className="container mx-auto p-6  min-h-screen relative">
       {/* Header */}
       <motion.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 p-4 bg-gradient-to-r from-purple-500 to-indigo-600 flex justify-between items-center z-10"
+        className="fixed top-0 left-0 right-0 p-4  flex justify-between items-center z-10"
       >
-        <h1 className="text-white text-2xl font-bold">Saved Businesses</h1>
+        <h1 className="text-black text-2xl font-bold">Saved Businesses</h1>
         <div className="flex items-center space-x-4">
         <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
           <DialogTrigger asChild>

@@ -559,7 +559,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container min-h-screen bg-gradient-to-br from-violet-600 to-teal-400">
+    <div className="app-container min-h-screen ">
       <TopBar data={businessData?.data} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="metrics-grid">
@@ -574,7 +574,7 @@ const App: React.FC = () => {
                 padding: "12px",
                 minHeight: "100px",
               }}
-              className="bg-gradient-to-br from-violet-600 to-teal-400 rounded-lg"
+              className=" rounded-lg"
             >
               {metricCards
                 .filter(

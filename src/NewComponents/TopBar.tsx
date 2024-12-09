@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import useBusinessStore from "../store/buisnessSrore";
 import FilesModal from "./FilesModal";
 import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function shortenURL(url: string, maxLength = 30): string {
   return url.length > maxLength ? `${url.slice(0, maxLength)}...` : url;
@@ -66,7 +66,7 @@ export default function TopBar({ data }: { data: any }) {
 
   return (
     <div className="bg-transparent">
-      <header className="sticky top-0 z-50 flex h-14 items-center justify-between mb-3 bg-gradient-to-r from-purple-500 to-indigo-600 px-4">
+      <header className="sticky top-0 z-50 flex h-14 items-center justify-between mb-3  px-4">
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only">Go back</span>
