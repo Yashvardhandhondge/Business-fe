@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { NotepadText, Trash2 } from "lucide-react"; // For the delete icon
+import {  Trash2 } from "lucide-react"; // For the delete icon
 import Notes from "./Notes";
 
 interface Props {
@@ -64,9 +64,9 @@ const MetricCard: React.FC<Props> = ({ state, updateMetric, deleteCard }) => {
           >
             <div className="flex gap-2 mb-2 justify-between items-center">
              <h3 className="flex-1 text-xs text-gray-500">{metricName}</h3>
-              <button className="text-sm text-gray-500 mx-2" onClick={(e) => {e.stopPropagation(); setIsNotesOpen(true)}}>
+              {/* <button className="text-sm text-gray-500 mx-2" onClick={(e) => {e.stopPropagation(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" />
-              </button>
+              </button> */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();

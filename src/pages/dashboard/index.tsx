@@ -21,6 +21,10 @@ import MetricCard from "../../NewComponents/MetricCard";
 import { useParams, useNavigate } from "react-router-dom";
 import useBusinessStore from "../../store/buisnessSrore";
 import ReportModal from "../../NewComponents/ReportModal";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const App: React.FC = () => {
   const params = useParams();
@@ -362,19 +366,31 @@ const App: React.FC = () => {
         setIsUnAdded(false);
         localStorage.removeItem("business_payload");
         localStorage.removeItem("business");
+        if(updated.updatedBusiness){
+          toast.success("Business added successfully!");
+        } else {
+          toast.error("Failed to add business!");
+        }
       } else {
         const updated = await updateBusiness(businessid || "", payload);
         console.log("updated", updated);
         setHasChanges(false);
+        if(updated.updatedBusiness){
+          toast.success("Business updated successfully!");
+        } else {
+          toast.error("Failed to update business!");
+        }
       }
     } else {
       localStorage.setItem(
         "business_payload",
         JSON.stringify({ ...businessData?.data, ...payload })
       );
+      toast.warn("Please login to save!");
       navigate("/login");
       setHasChanges(false);
     }
+
   };
 
   const updateLoanSba = (value: {
@@ -622,6 +638,7 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container min-h-screen bg-blue-100 ">
+      <ToastContainer/>
       <TopBar state={state} data={businessData?.data} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="metrics-grid">
@@ -728,6 +745,7 @@ const App: React.FC = () => {
         {/* <Button className="bg-blue-500 text-white" onClick={() => setReportModalOpen(true)}>Download Report</Button>
        <NotesComponent state={state} updateState={updateState} />
         */}
+        <div>
         <Card value={0} onSave={(value) => updateState("customMetric", value)}>
           <CustomMetric
             customMetrics={customMetrics}
@@ -736,12 +754,15 @@ const App: React.FC = () => {
             state={state}
             updateState={updateState}
           />
-        </Card>
+        </Card></div>
+        <div>
         {(hasChanges || isUnAdded) && (
           <Button className="bg-green-500 text-white" onClick={handleSave}>
             Save Changes
           </Button>
         )}
+        <ToastContainer />
+        </div>
       </div>
       {reportModalOpen && (
         <ReportModal data={state} close={() => setReportModalOpen(false)} />

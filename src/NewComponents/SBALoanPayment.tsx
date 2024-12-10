@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-import { NotepadText } from "lucide-react";
+// import { NotepadText } from "lucide-react";
 import Notes from "./Notes";
 
 interface Props {
@@ -77,9 +77,9 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba, updateState
           <div className="bg-white flex flex-col rounded-xl border border-gray-400 shadow-md p-4 cursor-pointer hover:shadow-lg h-full relative">
           <div className="flex gap-2 mb-2 justify-between items-center">
              <h3 className="flex-1 text-xs text-gray-500">SBA Loan Payment</h3>
-              <button className="text-sm text-gray-500 mx-2" onClick={(e) =>{e.preventDefault(); setIsNotesOpen(true)}}>
+              {/* <button className="text-sm text-gray-500 mx-2" onClick={(e) =>{e.preventDefault(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" /> 
-              </button>
+              </button> */}
             </div>
             <p className="text-xl flex-1  text-blue-500">{`$${state.sbaLoanPayment.toLocaleString()}`} <span className="text-sm text-gray-500">/year</span></p>
             <p className="text-[0.65rem] text-gray-500">{state?.notes?.sbaLoanPayment[0] || ""}</p>
