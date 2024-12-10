@@ -19,7 +19,7 @@ interface Props {
 updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState, updateNotes }) => {
+const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [netProfitMargin, setNetProfitMargin] = useState(state.projectedNetProfitMargin);
   const [projectedCashflow, setProjectedCashflow] = useState(state.projectedCashflow);
