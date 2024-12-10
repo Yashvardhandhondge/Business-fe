@@ -55,21 +55,21 @@ const App: React.FC = () => {
     newExpenses: 0,
     additionalDebt: 0,
     notes: {
-      currentCashflow: ["Notes for currentCashflow"],
-      expectedSalary: ["Notes for expectedSalary"],
-      grossRevenue: ["Notes for grossRevenue"],
-      askingPrice: ["Notes for askingPrice"],
-      sde: ["Notes for sde"],
-      projectedCashflow: ["Notes for projectedCashflow"],
-      totalDebtPayments: ["Notes for totalDebtPayments"],
-      sbaLoanPayment: ["Notes for sbaLoanPayment"],
-      additionalLoanPayment: ["Notes for additionalLoanPayment"],
-      customMetric: ["Notes for customMetric"],
-      projectedNetProfitMargin: ["Notes for projectedNetProfitMargin"],
-      dscr: ["Notes for dscr"],
-      grossMultiple: ["Notes for grossMultiple"],
-      sdeMultiple: ["Notes for sdeMultiple"],
-      business: ["Notes for business"],
+      currentCashflow: [],
+      expectedSalary: [],
+      grossRevenue: [],
+      askingPrice: [],
+      sde: [],
+      projectedCashflow: [],
+      totalDebtPayments: [],
+      sbaLoanPayment: [],
+      additionalLoanPayment: [],
+      customMetric: [],
+      projectedNetProfitMargin: [],
+      dscr: [],
+      grossMultiple: [],
+      sdeMultiple: [],
+      business: [],
     },
   });
 
@@ -131,27 +131,17 @@ const App: React.FC = () => {
         additionalDebt: data?.business?.data?.additional_debt?.value || 0,
         notes: {
           ...state.notes,
-          currentCashflow: data?.business?.data?.current_cashflow?.notes || [
-            "Notes for currentCashflow",
-          ],
-          expectedSalary: data?.business?.data?.expected_salary?.notes || [
-            "Notes for expectedSalary",
-          ],
-          grossRevenue: data?.business?.data?.gross_revenue?.notes || [
-            "Notes for grossRevenue",
-          ],
-          askingPrice: data?.business?.data?.asking_price?.notes || [
-            "Notes for askingPrice",
-          ],
-          business: data?.business?.data?.business_notes || [
-            "Notes for business",
-          ],
-          // sde: data?.business?.data?.sde.notes || ["Notes for sde"],
-          // projectedCashflow: data?.business?.data?.projected_cashflow.notes || ["Notes for projectedCashflow"],
-          // totalDebtPayments: data?.business?.data?.loan_sba.notes || ["Notes for totalDebtPayments"],
-          // sbaLoanPayment: data?.business?.data?.loan_sba.notes || ["Notes for sbaLoanPayment"],
-          // additionalLoanPayment: data?.business?.data?.additional_loan.notes || ["Notes for additionalLoanPayment"],
-          // projectedNetProfitMargin: data?.business?.metrics?.net_profit_margin.notes || ["Notes for projectedNetProfitMargin"],
+          currentCashflow: data?.business?.data?.current_cashflow?.notes || [] ,
+          expectedSalary: data?.business?.data?.expected_salary?.notes || [],
+          grossRevenue: data?.business?.data?.gross_revenue?.notes || [],
+          askingPrice: data?.business?.data?.asking_price?.notes || [],
+          business: data?.business?.data?.business_notes || [],
+          sde: data?.business?.data?.sde.notes || [],
+          projectedCashflow: data?.business?.data?.projected_cashflow.notes || [],
+          totalDebtPayments: data?.business?.data?.loan_sba.notes || [],
+          sbaLoanPayment: data?.business?.data?.loan_sba.notes || [],
+          additionalLoanPayment: data?.business?.data?.additional_loan.notes || [],
+          projectedNetProfitMargin: data?.business?.metrics?.net_profit_margin.notes || [],
         },
       });
 
@@ -195,19 +185,11 @@ const App: React.FC = () => {
           additionalDebt: business?.additional_debt.value || 0,
           notes: {
             ...state.notes,
-            currentCashflow: business?.current_cashflow.notes || [
-              "Notes for currentCashflow",
-            ],
-            expectedSalary: business?.data?.expected_salary.notes || [
-              "Notes for expectedSalary",
-            ],
-            grossRevenue: business?.gross_revenue.notes || [
-              "Notes for grossRevenue",
-            ],
-            askingPrice: business?.asking_price.notes || [
-              "Notes for askingPrice",
-            ],
-            business: business?.business_notes || ["Notes for business"],
+            currentCashflow: business?.current_cashflow.notes || [],
+            expectedSalary: business?.data?.expected_salary.notes || [],
+            grossRevenue: business?.gross_revenue.notes || [],
+            askingPrice: business?.asking_price.notes || [],
+            business: business?.business_notes || [],
           },
         });
       }
@@ -547,13 +529,13 @@ const App: React.FC = () => {
       case "sde":
         return (
           <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
-            <SDE state={state} updateState={updateState} />
+            <SDE updateNotes={updateNotes} state={state} updateState={updateState} />
           </Card>
         );
       case "DSCRCalculator":
         return (
           <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
-            <DSCRCalculator state={state} updateState={updateState} />
+            <DSCRCalculator state={state} updateState={updateState} updateNotes={updateNotes} />
           </Card>
         );
       case "ProjectedCashflow":
@@ -562,19 +544,19 @@ const App: React.FC = () => {
             value={state.projectedCashflow}
             onSave={(value) => updateState("projectedCashflow", value)}
           >
-            <ProjectedCashflow state={state} updateState={updateState} />
+            <ProjectedCashflow state={state} updateState={updateState} updateNotes={updateNotes} />
           </Card>
         );
       case "GrossMultiple":
         return (
           <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
-            <GrossMultiple state={state} updateState={updateState} />
+            <GrossMultiple state={state} updateState={updateState} updateNotes={updateNotes} />
           </Card>
         );
       case "SDEMultiple":
         return (
           <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
-            <SDEMultiple state={state} updateState={updateState} />
+            <SDEMultiple state={state} updateState={updateState} updateNotes={updateNotes} />
           </Card>
         );
       case "SBALoanPayment":
@@ -586,7 +568,7 @@ const App: React.FC = () => {
             <SBALoanPayment
               updateLoanSba={updateLoanSba}
               state={state}
-              updateState={updateState}
+              updateState={updateState} updateNotes={updateNotes}
             />
           </Card>
         );
@@ -599,7 +581,7 @@ const App: React.FC = () => {
             <AdditionalLoanPayment
               updateAdditionalLoan={updateLoanAdditionalLoan}
               state={state}
-              updateState={updateState}
+              updateState={updateState} updateNotes={updateNotes}
             />
           </Card>
         );
@@ -609,13 +591,13 @@ const App: React.FC = () => {
             value={state.totalDebtPayments}
             onSave={(value) => updateState("totalDebtPayments", value)}
           >
-            <TotalDebtPayments state={state} updateState={updateState} />
+            <TotalDebtPayments state={state} updateState={updateState} updateNotes={updateNotes} />
           </Card>
         );
       case "ProjectedNetProfitMargin":
         return (
           <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
-            <ProjectedNetProfitMargin state={state} updateState={updateState} />
+            <ProjectedNetProfitMargin state={state} updateState={updateState} updateNotes={updateNotes} />
           </Card>
         );
       case "customMetric":

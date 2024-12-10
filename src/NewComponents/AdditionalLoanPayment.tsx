@@ -18,9 +18,10 @@ interface Props {
   state: any;
   updateState: (key: string, value: number) => void;
   updateAdditionalLoan: (value: { amount: number; term: number; rate: number }) => void;
+  updateNotes: (key: string, value: string) => Promise<void>
 }
 
-const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan, updateState }) => {
+const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [additionalLoanPayment, setAdditionalLoanPayment] = useState(state.additionalLoanPayment);
   const [additionalLoanAmount, setAdditionalLoanAmount] = useState(state.additional_loan_amount);
@@ -38,6 +39,7 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan, u
 
   const handleSaveChanges = () => {
     updateAdditionalLoan({ amount: additionalLoanAmount, term: additionalLoanTerm, rate: additionalLoanRate });
+    updateNotes("additionalLoanPayment", notes);
     updateState("additionalLoanPayment", additionalLoanPayment);
     setIsDialogOpen(false);
   };
@@ -64,7 +66,7 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan, u
               </button>
             </div>
             <p className="text-xl flex-1  text-blue-500">{`$${state.additionalLoanPayment.toLocaleString()}`} <span className="text-sm text-gray-500">/year</span></p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.additionalLoanPayment[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.additionalLoanPayment[0] || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

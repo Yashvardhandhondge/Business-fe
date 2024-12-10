@@ -55,7 +55,7 @@ const GrossRevenue: React.FC<Props> = ({ state, updateState }) => {
               </button>
             </div>
             <p className="text-xl flex-1  text-green-500">${state.grossRevenue.toLocaleString()}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.grossRevenue[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.grossRevenue[0] || ""}</p>
           </div>
         </DialogTrigger>
 

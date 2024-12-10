@@ -55,7 +55,7 @@ const ExpectedSalary: React.FC<Props> = ({ state, updateState }) => {
               </button>
             </div>  
             <p className="text-xl flex-1  text-blue-500">${state.expectedSalary.toLocaleString()}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.expectedSalary[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.expectedSalary[0] || ""}</p>
           </div>
         </DialogTrigger>
 

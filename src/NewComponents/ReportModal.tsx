@@ -30,30 +30,41 @@ const ReportModal = ({ data, close }: ReportModalProps) => {
     // };
     
 
-const generatePDF = (data: any) => {
-    let doc: any = new jsPDF();
-    doc.setFontSize(14);
-    doc.text('Business Report', 10, 10);
-    const pageHeight = doc.internal.pageSize.height;
-    let y = 20;
-    let page = 1;
-    doc.page = page;
-    const reportData = {...data, notes:{...data.notes}};
-    Object.entries(reportData).forEach(([key, value]:any) => {
-      if (y > pageHeight - 20) {
-        doc.addPage();
-        y = 20;
-      }
-      doc.setFontSize(12);
-      doc.text(`${key}: ${value}`, 10, y);
-      y += 10;
-    });
-    if (page > 1) {
+    const generatePDF = (data: any) => {
+      let doc: any = new jsPDF();
+      doc.setFontSize(14);
+      doc.text('Business Report', 10, 10);
+      const pageHeight = doc.internal.pageSize.height;
+      let y = 20;
+      let page = 1;
+      doc.page = page;
+  
+      const reportData = { ...data, notes: { ...data.notes } };
+  
+      Object.entries(reportData).forEach(([key, value]: any) => {
+          if (y > pageHeight - 20) {
+              doc.addPage();
+              y = 20;
+          }
+          doc.setFontSize(12);
+  
+          // Check if value is an object or array
+          if (typeof value === 'object') {
+              // Pretty-print the object
+              value = JSON.stringify(value, null, 2);
+              // Split into lines to fit within the PDF
+              const lines = doc.splitTextToSize(`${key}: ${value}`, 180); // Adjust width as needed
+              doc.text(lines, 10, y);
+              y += lines.length * 10; // Adjust line spacing
+          } else {
+              doc.text(`${key}: ${value}`, 10, y);
+              y += 10;
+          }
+      });
+  
       doc.save(`business_report_${page}.pdf`);
-    } else {
-      doc.save('business_report.pdf');
-    }
-};
+  };
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

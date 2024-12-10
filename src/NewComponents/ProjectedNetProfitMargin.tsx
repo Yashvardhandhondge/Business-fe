@@ -16,9 +16,10 @@ import Notes from "./Notes";
 interface Props {
   state: any;
   updateState: (key: string, value: number) => void;
+updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
+const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [netProfitMargin, setNetProfitMargin] = useState(state.projectedNetProfitMargin);
   const [projectedCashflow, setProjectedCashflow] = useState(state.projectedCashflow);
@@ -60,7 +61,7 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
               </button>
             </div>
             <p className="text-xl flex-1  text-blue-500">{` ${state.projectedNetProfitMargin}% `}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedNetProfitMargin[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedNetProfitMargin[0] || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

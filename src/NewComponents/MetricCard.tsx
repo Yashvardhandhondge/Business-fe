@@ -80,7 +80,7 @@ const MetricCard: React.FC<Props> = ({ state, updateMetric, deleteCard }) => {
             <p className="text-xl flex-1  text-blue-500">
               {metricType === "$" ? `$${Number(metricValue).toLocaleString()}` : metricValue}
             </p>
-            <p className="text-[0.65rem] text-gray-500">{notes || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{notes || ""}</p>
           </div>
         </DialogTrigger>
 

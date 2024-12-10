@@ -16,9 +16,10 @@ import Notes from "./Notes";
 interface Props {
   state: any;
   updateState: (key: string, value: number) => void;
+  updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
+const TotalDebtPayments: React.FC<Props> = ({ state, updateState,updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [totalDebtPayments, setTotalDebtPayments] = useState(state.totalDebtPayments);
   const [sbaLoanPayment, setSbaLoanPayment] = useState(state.sbaLoanPayment);
@@ -35,6 +36,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
   } ,[state]);
 
   const handleSaveChanges = () => {
+    updateNotes("totalDebtPayments", notes);
     updateState("totalDebtPayments", totalDebtPayments);
     updateState("sbaLoanPayment", sbaLoanPayment);
     updateState("additionalLoanPayment", additionalLoanPayment);
@@ -63,7 +65,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState }) => {
               </button>
             </div>
             <p className="text-xl flex-1  text-blue-500">{`$${state.totalDebtPayments.toLocaleString()}`} <span className="text-sm text-gray-500">/year</span></p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.totalDebtPayments[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.totalDebtPayments[0] || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

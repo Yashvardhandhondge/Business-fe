@@ -16,9 +16,10 @@ import Notes from "./Notes";
 interface Props {
   state: any;
   updateState: (key: string, value: number) => void;
+  updateNotes: (key: string, value: string) => Promise<void>
 }
 
-const SDE: React.FC<Props> = ({ state, updateState }) => {
+const SDE: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sde, setSDE] = useState(state.sde);
   const [notes, setNotes] = useState("");
@@ -31,6 +32,7 @@ const SDE: React.FC<Props> = ({ state, updateState }) => {
 
   const handleSaveChanges = () => {
     updateState("sde", sde);
+    updateNotes("sde", notes);
     setShowMessageBox(true); 
     setTimeout(() => setShowMessageBox(false), 3000); 
     setIsDialogOpen(false);
@@ -60,7 +62,7 @@ const SDE: React.FC<Props> = ({ state, updateState }) => {
               </button>
             </div>
             <p className="text-xl flex-1  text-blue-500">{`$${state.sde.toLocaleString()}`}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sde[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sde[0] || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

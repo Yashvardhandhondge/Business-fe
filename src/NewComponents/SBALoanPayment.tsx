@@ -21,9 +21,10 @@ interface Props {
     term: number;
     rate: number;
 }) => void
+updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
+const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loanPayment, setLoanPayment] = useState(state.sbaLoanPayment);
   const [loanAmount, setLoanAmount] = useState(state.loan_sba_amount);
@@ -40,6 +41,8 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
   }, [state]);
 
   const handleSaveChanges = () => {
+    updateNotes("sbaLoanPayment", notes);
+    updateState("sbaLoanPayment", loanPayment);
     updateLoanSba({amount: loanAmount, term: loanTerm, rate: loanRate});
     setIsDialogOpen(false);
   };
@@ -79,7 +82,7 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
               </button>
             </div>
             <p className="text-xl flex-1  text-blue-500">{`$${state.sbaLoanPayment.toLocaleString()}`} <span className="text-sm text-gray-500">/year</span></p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sbaLoanPayment[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sbaLoanPayment[0] || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

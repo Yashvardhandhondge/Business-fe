@@ -16,6 +16,7 @@ import Notes from "./Notes";
 interface Props {
   state: any;
   updateState: (key: string, value: number) => void;
+updateNotes: (key: string, value: string) => Promise<void>;
 }
 
 const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
@@ -63,7 +64,7 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
               </button>
             </div>
             <p className="text-xl flex-1  text-blue-500">{` $${state.projectedCashflow.toLocaleString()} `}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedCashflow[0] || "No notes"}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedCashflow[0] || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>
