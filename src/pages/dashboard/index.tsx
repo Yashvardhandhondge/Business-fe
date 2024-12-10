@@ -15,7 +15,6 @@ import AdditionalLoanPayment from "../../NewComponents/AdditionalLoanPayment";
 import TotalDebtPayments from "../../NewComponents/TotalDebtPayments";
 import ProjectedNetProfitMargin from "../../NewComponents/ProjectedNetProfitMargin";
 import CustomMetric from "../../NewComponents/CustomMetric";
-import NotesComponent from "../../NewComponents/NotesComponent";
 import TopBar from "../../NewComponents/TopBar";
 import { Button } from "../../components/ui/button";
 import MetricCard from "../../NewComponents/MetricCard";

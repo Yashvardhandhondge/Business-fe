@@ -14,7 +14,7 @@ function shortenURL(url: string, maxLength = 30): string {
   return url.length > maxLength ? `${url.slice(0, maxLength)}...` : url;
 }
 
-export default function TopBar({ data, state }: { data: any, state: any }) {
+export default function TopBar({ data }: { data: any, state: any }) {
   const { fetchBusiness, uploadFile, updateBusiness } = useBusinessStore();
   const [isUploading, setIsUploading] = React.useState(false);
   const [showFilesModal, setShowFilesModal] = React.useState(false);
