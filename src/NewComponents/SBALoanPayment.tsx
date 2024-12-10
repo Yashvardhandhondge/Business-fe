@@ -91,10 +91,15 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             </label>
             <Input
               id="loanAmount"
-              type="number"
+              type="text"
               disabled
-              value={loanPayment}
-              onChange={(e) => setLoanPayment(parseFloat(e.target.value))}
+              value={loanPayment.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setLoanPayment(Number(numericValue));
+                }
+              }}
               placeholder="auto calculated"
               className="w-full"
             />
@@ -103,9 +108,14 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             </label>
             <Input
               id="loanAmount"
-              type="number"
-              value={loanAmount}
-              onChange={(e) => setLoanAmount(parseFloat(e.target.value))}
+              type="text"
+              value={loanAmount?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setLoanAmount(Number(numericValue));
+                }
+              }}
               placeholder="Enter Loan Amount"
               className="w-full"
             />
@@ -114,9 +124,14 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             </label>
             <Input
               id="loanRate"
-              type="number"
-              value={loanRate}
-              onChange={(e) => setLoanRate(parseFloat(e.target.value))}
+              type="text"
+              value={loanRate?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setLoanRate(Number(numericValue));
+                }
+              }}
               placeholder="Enter Loan Rate"
               className="w-full"
             />
@@ -125,9 +140,14 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             </label>
             <Input
               id="loanTerm"
-              type="number"
-              value={loanTerm}
-              onChange={(e) => setLoanTerm(parseInt(e.target.value, 10))}
+              type="text"
+              value={loanTerm?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setLoanTerm(Number(numericValue));
+                }
+              }}
               placeholder="Enter Loan Term"
               className="w-full"
             />

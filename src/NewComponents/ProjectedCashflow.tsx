@@ -76,8 +76,8 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="projectedCashflow"
-              type="number"
-              value={projectedCashflow}
+              type="text"
+              value={projectedCashflow?.toLocaleString()}
               disabled
               onChange={(e) => setProjectedCashflow(Number(e.target.value))}
               placeholder="auto calculated"
@@ -88,9 +88,14 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="currentCashflow"
-              type="number"
-              value={currentCashflow}
-              onChange={(e) => setCurrentCashflow(Number(e.target.value))}
+              type="text"
+              value={currentCashflow?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setCurrentCashflow(Number(numericValue));
+                }
+              }}
               placeholder="Enter current cashflow"
               className="w-full"
             />
@@ -99,9 +104,14 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="expenses"
-              type="number"
-              value={newExpenses}
-              onChange={(e) => setNewExpenses(Number(e.target.value))}
+              type="text"
+              value={newExpenses?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setNewExpenses(Number(numericValue));
+                }
+              }}
               placeholder="Enter new expenses" 
               className="w-full"
             />
@@ -110,10 +120,15 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="totalDebtPayments"
-              type="number"
-              value={totalDebtPayments}
+              type="text"
+              value={totalDebtPayments?.toLocaleString()}
               disabled
-              onChange={(e) => setTotalDebtPayments(Number(e.target.value))}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setTotalDebtPayments(Number(numericValue));
+                }
+              }}
               placeholder="Enter total debt payments"
               className="w-full"
             />

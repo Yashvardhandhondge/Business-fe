@@ -70,9 +70,14 @@ const AskingPriceCard: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="askingPrice"
-              type="number"
-              value={askingPrice}
-              onChange={(e) => setAskingPrice(Number(e.target.value))}
+              type="text"
+              value={askingPrice?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setAskingPrice(Number(numericValue));
+                }
+              }}
               placeholder="Enter asking price"
               className="w-full"
             />

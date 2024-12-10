@@ -65,30 +65,34 @@ const ExpectedSalary: React.FC<Props> = ({ state, updateState }) => {
           </DialogHeader>
           <div className="grid gap-4 py-4">
            
-            <label className="font-semibold" htmlFor="salary">
-              Expected Salary
-            </label>
-            <Input
-              id="salary"
-              type="number"
-              value={salary}
-              onChange={(e) => setSalary(Number(e.target.value))}
-              placeholder="Enter expected salary"
-              className="w-full"
-            />
+           <label className="font-semibold" htmlFor="salary">
+             Expected Salary
+           </label>
+           <Input
+             id="salary"
+             type="text"
+             value={salary?.toLocaleString()}
+             onChange={(e) =>{const numericValue = e.target.value.replace(/,/g, '');
+               if (!isNaN(Number(numericValue))) {
+                 setSalary(Number(numericValue));
+               }
+             }}
+             placeholder="Enter expected salary"
+             className="w-full"
+           />
 
-          
-            <label className="font-semibold" htmlFor="notes">
-              Notes
-            </label>
-            <Textarea
-              id="notes"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add notes here..."
-              className="w-full"
-            />
-          </div>
+         
+           <label className="font-semibold" htmlFor="notes">
+             Notes
+           </label>
+           <Textarea
+             id="notes"
+             value={notes}
+             onChange={(e) => setNotes(e.target.value)}
+             placeholder="Add notes here..."
+             className="w-full"
+           />
+         </div>
 
       
           <div className="flex justify-end gap-2">

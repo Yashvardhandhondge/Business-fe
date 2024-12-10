@@ -54,7 +54,7 @@ const GrossRevenue: React.FC<Props> = ({ state, updateState }) => {
                 <NotepadText className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-2xl text-green-500">${state.grossRevenue}</p>
+            <p className="text-2xl text-green-500">${state.grossRevenue.toLocaleString()}</p>
           </div>
         </DialogTrigger>
 
@@ -70,9 +70,14 @@ const GrossRevenue: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="revenue"
-              type="number"
-              value={revenue}
-              onChange={(e) => setRevenue(Number(e.target.value))}
+              type="text"
+              value={revenue?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setRevenue(Number(numericValue));
+                }
+              }}
               placeholder="Enter gross revenue"
               className="w-full"
             />

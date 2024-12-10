@@ -38,10 +38,10 @@ const CustomMetric: React.FC<Props> = ({ customMetrics, setCustomMetrics }) => {
      
 
       
-                  <button onClick={() => setIsOpen(true)} className="bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-lg h-full  relative">
-                    <div className="flex flex-col justify-center items-center h-full">
+                  <button onClick={() => setIsOpen(true)} className="bg-white shadow-md p-4  cursor-pointer hover:shadow-lg rounded-full  relative">
+                    <div className="flex flex-col justify-center items-center rounded-full">
                       <h3 className="text-2xl"><PlusIcon className="w-4 h-4" /></h3>
-                      <p className="text-lg">Add Custom Metric</p>
+                     
                     </div>
                   </button>
 

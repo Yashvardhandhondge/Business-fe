@@ -72,9 +72,14 @@ const SDE: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="sde"
-              type="number"
-              value={sde}
-              onChange={(e) => setSDE(Number(e.target.value))}
+              type="text"
+              value={sde?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setSDE(Number(numericValue));
+                }
+              }}
               placeholder="Enter SDE value"
               className="w-full"
             />

@@ -559,95 +559,105 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container min-h-screen ">
+    <div className="app-container min-h-screen bg-blue-100 ">
       <TopBar data={businessData?.data} />
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="metrics-grid">
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                gap: "12px",
-                padding: "12px",
-                minHeight: "100px",
-              }}
-              className=" rounded-lg"
+  <Droppable droppableId="metrics-grid">
+    {(provided) => (
+      <div
+        ref={provided.innerRef}
+        {...provided.droppableProps}
+        style={{
+          backgroundColor: "#E3F2FD", // Tailwind gray-300
+          borderRadius: "12px", // Rounded corners
+          padding: "16px", // Padding for spacing
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          gap: "12px",
+          minHeight: "100px",
+        }}
+        className="shadow-sm"
+      >
+        {metricCards
+          .filter(
+            (card) =>
+              ![
+                "sba_loan_amount",
+                "sba_loan_rate",
+                "sba_loan_term",
+                "additional_debt",
+                "additional_loan_amount",
+                "additional_loan_rate",
+                "additional_loan_term",
+                "growth_rate",
+              ].includes(card.id)
+          )
+          .map((card, index) => (
+            <Draggable
+              key={card.id}
+              draggableId={card.id}
+              index={index}
             >
-              {metricCards
-                .filter(
-                  (card) =>
-                    ![
-                      "sba_loan_amount",
-                      "sba_loan_rate",
-                      "sba_loan_term",
-                      "additional_debt",
-                      "additional_loan_amount",
-                      "additional_loan_rate",
-                      "additional_loan_term",
-                      "growth_rate",
-                    ].includes(card.id)
-                )
-                .map((card, index) => (
-                  <Draggable
-                    key={card.id}
-                    draggableId={card.id}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        style={{
-                          ...provided.draggableProps.style,
-                          opacity: snapshot.isDragging ? 0.8 : 1,
-                        }}
-                      >
-                        <div {...provided.dragHandleProps} className="h-full">
-                          {renderCard(card.id)}
-                        </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-              
-              {customMetrics
-                .map((card, index) => (
-                  <Draggable
-                    key={card.metricName}
-                    draggableId={card.metricName}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        style={{
-                          ...provided.draggableProps.style,
-                          opacity: snapshot.isDragging ? 0.8 : 1,
-                        }}
-                      >
-                        <div {...provided.dragHandleProps} className="h-full">
-                          {renderCard("customMetric")}
-                        </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                <Card value={0} onSave={(value) => updateState("customMetric", value)}>
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  style={{
+                    ...provided.draggableProps.style,
+                    opacity: snapshot.isDragging ? 0.8 : 1,
+                    // backgroundColor: "#FFFFFF", // White card background
+                    borderRadius: "8px", // Card corners
+                    // padding: "8px",
+                    // boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  {renderCard(card.id)}
+                </div>
+              )}
+            </Draggable>
+          ))}
+
+        {customMetrics.map((card, index) => (
+          <Draggable
+            key={card.metricName}
+            draggableId={card.metricName}
+            index={index}
+          >
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                style={{
+                  ...provided.draggableProps.style,
+                  opacity: snapshot.isDragging ? 0.8 : 1,
+                  // backgroundColor: "#FFFFFF", // White card background
+                  borderRadius: "8px", // Card corners
+                  padding: "8px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                {renderCard("customMetric")}
+              </div>
+            )}
+          </Draggable>
+        ))}
+
+        {provided.placeholder}
+      </div>
+    )}
+  </Droppable>
+</DragDropContext>
+
+     
+     <div className="flex justify-between m-4">
+       {/* <Button className="bg-blue-500 text-white" onClick={() => setReportModalOpen(true)}>Download Report</Button>
+       <NotesComponent state={state} updateState={updateState} />
+        */}
+         <Card value={0} onSave={(value) => updateState("customMetric", value)}>
                 <CustomMetric customMetrics={customMetrics} setCustomMetrics={setCustomMetrics} state={state} updateState={updateState} />
                 </Card>
-
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-     <div className="flex justify-end m-4">
-       <Button className="bg-blue-500 text-white" onClick={() => setReportModalOpen(true)}>Download Report</Button>
-       <NotesComponent state={state} updateState={updateState} />
        {(hasChanges || isUnAdded) && <Button className="bg-green-500 text-white" onClick={handleSave}>Save Changes</Button>}
      </div>
      {reportModalOpen && <ReportModal data={state} close={() => setReportModalOpen(false)} />}

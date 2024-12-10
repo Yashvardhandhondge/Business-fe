@@ -56,14 +56,14 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         {/* Trigger to open dialog */}
         <DialogTrigger asChild>
-          <div className="bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-lg h-full relative">
-          <div className="flex gap-2justify-between items-center">
-              <h3 className="flex-1">Current Cashflow</h3>
+          <div className="bg-white shadow-md p-4 rounded-xl border border-gray-400 cursor-pointer hover:shadow-lg h-full relative">
+          <div className="flex gap-2 mb-2 justify-between items-center">
+              <h3 className="flex-1 text-xs text-gray-500">Current Cashflow</h3>
               <button className="text-sm text-gray-500 mx-2" onClick={(e) => {e.stopPropagation(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-2xl text-yellow-500">${state.currentCashflow}</p>
+            <p className="text-xl text-yellow-500">${state.currentCashflow}</p>
           </div>
         </DialogTrigger>
 
@@ -79,9 +79,14 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
             </label>
             <Input
               id="cashflow"
-              type="number"
-              value={cashflow}
-              onChange={(e) => setCashflow(Number(e.target.value))}
+              type="text"
+              value={cashflow?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setCashflow(Number(numericValue));
+                }
+              }}
               className="w-full"
             />
             <label className="font-semibold" htmlFor="cashflow">
@@ -89,9 +94,14 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
             </label>
             <Input
               id="expenses"
-              type="number"
-              value={newExpenses}
-              onChange={(e) => setNewExpenses(Number(e.target.value))}
+              type="text"
+              value={newExpenses?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setNewExpenses(Number(numericValue));
+                }
+              }}
               placeholder="Enter new expenses" 
               className="w-full"
             />

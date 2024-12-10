@@ -75,10 +75,15 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan })
             </label>
             <Input
               id="additionalLoanPayment"
-              type="number"
-              value={additionalLoanPayment}
+              type="text"
+              value={additionalLoanPayment?.toLocaleString()} 
               disabled
-              onChange={(e) => setAdditionalLoanPayment(parseFloat(e.target.value))}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setAdditionalLoanPayment(Number(numericValue));
+                }
+              }}
               placeholder="Enter Additional Loan Payment"
               className="w-full"
             />
@@ -87,9 +92,14 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan })
             </label>
             <Input
               id="additionalLoanAmount"
-              type="number"
-              value={additionalLoanAmount}
-              onChange={(e) => setAdditionalLoanAmount(parseFloat(e.target.value))}
+              type="text"
+              value={additionalLoanAmount?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setAdditionalLoanAmount(Number(numericValue));
+                }
+              }}
               placeholder="Enter Loan Amount"
               className="w-full"
             />
@@ -100,7 +110,9 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan })
               id="additionalLoanRate"
               type="number"
               value={additionalLoanRate}
-              onChange={(e) => setAdditionalLoanRate(parseFloat(e.target.value))}
+              onChange={(e) => {
+                setAdditionalLoanRate(Number(e.target.value));
+              }}
               placeholder="Enter Loan Rate"
               className="w-full"
             />
@@ -109,9 +121,14 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan })
             </label>
             <Input
               id="additionalLoanTerm"
-              type="number"
-              value={additionalLoanTerm}
-              onChange={(e) => setAdditionalLoanTerm(parseFloat(e.target.value))}
+              type="text"
+              value={additionalLoanTerm?.toLocaleString()}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/,/g, '');
+                if (!isNaN(Number(numericValue))) {
+                  setAdditionalLoanTerm(Number(numericValue));
+                }
+              }}
               placeholder="Enter Loan Term"
               className="w-full"
             />
