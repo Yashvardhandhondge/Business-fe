@@ -7,18 +7,20 @@ import { toast } from 'react-toastify';
 import useBusinessStore from "../store/buisnessSrore";
 import FilesModal from "./FilesModal";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
 function shortenURL(url: string, maxLength = 30): string {
   return url.length > maxLength ? `${url.slice(0, maxLength)}...` : url;
 }
 
-export default function TopBar({ data }: { data: any }) {
+export default function TopBar({ data, state }: { data: any, state: any }) {
   const { fetchBusiness, uploadFile, updateBusiness } = useBusinessStore();
   const [isUploading, setIsUploading] = React.useState(false);
   const [showFilesModal, setShowFilesModal] = React.useState(false);
   const [showNotesModal, setShowNotesModal] = React.useState(false);
   const [notes, setNotes] = React.useState("");
+  const navigate = useNavigate();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   // const navigate = useNavigate();
@@ -67,7 +69,7 @@ export default function TopBar({ data }: { data: any }) {
   return (
     <div className="bg-transparent">
       <header className=" top-0 z-50 flex h-10 items-center justify-between mb-3  px-4">
-        <Button variant="ghost" size="icon" className="h-8 w-8">
+        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate(-1)}>
           <ArrowLeft className="h-4 w-4 mt-2 text-blue-500" />
           <span className="sr-only">Go back</span>
         </Button>
@@ -155,7 +157,7 @@ export default function TopBar({ data }: { data: any }) {
         accept="*"
         style={{ display: "none" }}
       />
-      {showFilesModal && <FilesModal  files={data?.business_attachments} close={() => setShowFilesModal(false)} />}  
+      {showFilesModal && <FilesModal  files={data?.business_attachments} close={() => setShowFilesModal(false)} state={data} />}  
       
     </div>
   );

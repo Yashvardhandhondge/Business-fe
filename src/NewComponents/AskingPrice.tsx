@@ -47,14 +47,15 @@ const AskingPriceCard: React.FC<Props> = ({ state, updateState }) => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         {/* Trigger to open dialog */}
         <DialogTrigger asChild>
-          <div className="bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-lg h-full  relative">
-          <div className="flex gap-2justify-between items-center">
-              <h3 className="flex-1">Asking Price</h3>
+          <div className="bg-white flex flex-col rounded-xl border border-gray-400 shadow-md p-4 cursor-pointer hover:shadow-lg h-full relative">
+          <div className="flex gap-2 mb-2 justify-between items-center">
+             <h3 className="flex-1 text-xs text-gray-500">Asking Price</h3>
               <button className="text-sm text-gray-500 mx-2" onClick={(e) => {e.stopPropagation(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-2xl text-green-500">{`$${state.askingPrice}`}</p>
+            <p className="text-xl flex-1  text-green-500">{`$${state.askingPrice.toLocaleString()}`}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.askingPrice[0] || "No notes"}</p>
           </div>
         </DialogTrigger>
 

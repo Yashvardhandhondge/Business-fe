@@ -52,14 +52,15 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
       {/* <MessageCircle className="absolute top-2 right-2 text-xl text-gray-500"/> */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <div className="bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-lg h-full  relative">
-          <div className="flex gap-2justify-between items-center">
-              <h3 className="flex-1">Projected Net Profit Margin</h3>
+          <div className="bg-white flex flex-col rounded-xl border border-gray-400 shadow-md p-4 cursor-pointer hover:shadow-lg h-full relative">
+          <div className="flex gap-2 mb-2 justify-between items-center">
+             <h3 className="flex-1 text-xs text-gray-500">Projected Net Profit Margin</h3>
               <button className="text-sm text-gray-500 mx-2" onClick={(e) => {e.stopPropagation(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-2xl text-blue-500">{` ${state.projectedNetProfitMargin}% `}</p>
+            <p className="text-xl flex-1  text-blue-500">{` ${state.projectedNetProfitMargin}% `}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedNetProfitMargin[0] || "No notes"}</p>
           </div>
         </DialogTrigger>
         <DialogContent>
@@ -84,8 +85,9 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="projectedCashflow"
-              type="number"
-              value={projectedCashflow}
+              type="text"
+              value={projectedCashflow.toLocaleString()}
+              disabled
               onChange={(e) => setProjectedCashflow(parseFloat(e.target.value))}
               placeholder="Enter Projected Cashflow"
               className="w-full"
@@ -95,9 +97,13 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState }) => {
             </label>
             <Input
               id="grossRevenue"
-              type="number"
-              value={grossRevenue}
-              onChange={(e) => setGrossRevenue(parseFloat(e.target.value))}
+              type="text"
+              value={grossRevenue.toLocaleString()}
+              onChange={(e) => {
+                if(!isNaN(Number(e.target.value.replace(/,/g, "")))) {
+                  setGrossRevenue(Number(e.target.value.replace(/,/g, "")));
+                }
+              }}
               placeholder="Enter Gross Revenue"
               className="w-full"
             />

@@ -11,9 +11,10 @@ interface Props {
     notes: string[];
 }[]
   setCustomMetrics: Dispatch<SetStateAction<{ metricName: string; metricValue: string; metricType: "X" | "$" | "%" | "N"; notes: string[]; }[]>>;
+  setHasChanges: Dispatch<SetStateAction<boolean>>;
 }
 
-const CustomMetric: React.FC<Props> = ({ customMetrics, setCustomMetrics }) => {
+const CustomMetric: React.FC<Props> = ({ customMetrics, setCustomMetrics, setHasChanges }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [metricName, setMetricName] = useState("");
   const [metricValue, setMetricValue] = useState<number | string>("");
@@ -22,7 +23,12 @@ const CustomMetric: React.FC<Props> = ({ customMetrics, setCustomMetrics }) => {
 
   const handleSaveChanges = () => {
     setCustomMetrics([...customMetrics, { metricName, metricValue: metricValue.toString(), metricType, notes }]);
+    setMetricName("");
+    setMetricValue("");
+    setMetricType("$");
+    setNotes([]);
     setIsOpen(false);
+    setHasChanges(true);
   };
 
   const handleCancel = () => {

@@ -17,22 +17,21 @@ import ProjectedNetProfitMargin from "../../NewComponents/ProjectedNetProfitMarg
 import CustomMetric from "../../NewComponents/CustomMetric";
 import NotesComponent from "../../NewComponents/NotesComponent";
 import TopBar from "../../NewComponents/TopBar";
-import { Button } from '../../components/ui/button';
+import { Button } from "../../components/ui/button";
 import MetricCard from "../../NewComponents/MetricCard";
 import { useParams, useNavigate } from "react-router-dom";
 import useBusinessStore from "../../store/buisnessSrore";
 import ReportModal from "../../NewComponents/ReportModal";
 
-
 const App: React.FC = () => {
-  const params = useParams()
-  const {fetchBusiness, updateBusiness,addBusiness} = useBusinessStore()
-  const businessid = params.id
-  const [businessData, setBusinessData] = useState<any>()
-  const [hasChanges, setHasChanges] = useState<boolean>(false)
-  const [isUnAdded, setIsUnAdded] = useState<boolean>(false)
-  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false)
-  const navigate = useNavigate()
+  const params = useParams();
+  const { fetchBusiness, updateBusiness, addBusiness } = useBusinessStore();
+  const businessid = params.id;
+  const [businessData, setBusinessData] = useState<any>();
+  const [hasChanges, setHasChanges] = useState<boolean>(false);
+  const [isUnAdded, setIsUnAdded] = useState<boolean>(false);
+  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [state, setState] = useState({
     currentCashflow: 0,
     expectedSalary: 0,
@@ -44,17 +43,17 @@ const App: React.FC = () => {
     sbaLoanPayment: 0,
     additionalLoanPayment: 0,
     customMetric: 0,
-    projectedNetProfitMargin:0,
+    projectedNetProfitMargin: 0,
     dscr: 0,
-    grossMultiple:0,
+    grossMultiple: 0,
     sdeMultiple: 0,
-    loan_sba_amount:0,
-    loan_sba_term:0,
-    loan_sba_rate:0,
-    additional_loan_term:0,
-    additional_loan_rate:0,
-    additional_loan_amount:0,
-    newExpenses:0,
+    loan_sba_amount: 0,
+    loan_sba_term: 0,
+    loan_sba_rate: 0,
+    additional_loan_term: 0,
+    additional_loan_rate: 0,
+    additional_loan_amount: 0,
+    newExpenses: 0,
     additionalDebt: 0,
     notes: {
       currentCashflow: ["Notes for currentCashflow"],
@@ -72,15 +71,17 @@ const App: React.FC = () => {
       grossMultiple: ["Notes for grossMultiple"],
       sdeMultiple: ["Notes for sdeMultiple"],
       business: ["Notes for business"],
-    }
+    },
   });
 
-  const [customMetrics, setCustomMetrics] = useState<{
-    metricName: string,
-    metricValue: string,
-    metricType: "X" | "$" | "%" | "N",
-    notes: string[],
-  }[]>([]);
+  const [customMetrics, setCustomMetrics] = useState<
+    {
+      metricName: string;
+      metricValue: string;
+      metricType: "X" | "$" | "%" | "N";
+      notes: string[];
+    }[]
+  >([]);
 
   const [cardOrder, setCardOrder] = useState([
     "currentCashflow",
@@ -101,7 +102,7 @@ const App: React.FC = () => {
     const fetchData = async () => {
       const data = await fetchBusiness(businessid || "");
       console.log(data);
-      setBusinessData(data?.business)
+      setBusinessData(data?.business);
       setState({
         ...state,
         currentCashflow: data?.business?.data?.current_cashflow.value || 0,
@@ -111,12 +112,16 @@ const App: React.FC = () => {
         sbaLoanPayment: data?.business?.data?.sba_loan_payment?.value || 0,
         loan_sba_term: data?.business?.data?.loan_sba?.term || 0,
         loan_sba_rate: data?.business?.data?.loan_sba?.rate || 0,
-        additional_loan_amount: data?.business?.data?.additional_loan.amount || 0,
+        additional_loan_amount:
+          data?.business?.data?.additional_loan.amount || 0,
         additional_loan_term: data?.business?.data?.additional_loan?.term || 0,
         additional_loan_rate: data?.business?.data?.additional_loan?.rate || 0,
-        additionalLoanPayment: data?.business?.data?.additional_loan?.amount || 0,
-        totalDebtPayments: data?.business?.data?.total_debt_payments?.value || 0,
-        projectedNetProfitMargin: data?.business?.metrics?.net_profit_margin?.value || 0,
+        additionalLoanPayment:
+          data?.business?.data?.additional_loan?.amount || 0,
+        totalDebtPayments:
+          data?.business?.data?.total_debt_payments?.value || 0,
+        projectedNetProfitMargin:
+          data?.business?.metrics?.net_profit_margin?.value || 0,
         dscr: data?.business?.metrics?.dscr?.value || 0,
         grossMultiple: data?.business?.metrics?.gross_multiple?.value || 0,
         sdeMultiple: data?.business?.metrics?.sde_multiple?.value || 0,
@@ -125,13 +130,23 @@ const App: React.FC = () => {
         loan_sba_amount: data?.business?.data?.loan_sba?.amount || 0,
         newExpenses: data?.business?.data?.new_expenses?.value || 0,
         additionalDebt: data?.business?.data?.additional_debt?.value || 0,
-        notes:{
+        notes: {
           ...state.notes,
-          currentCashflow: data?.business?.data?.current_cashflow?.notes || ["Notes for currentCashflow"],
-          expectedSalary: data?.business?.data?.expected_salary?.notes || ["Notes for expectedSalary"],
-          grossRevenue: data?.business?.data?.gross_revenue?.notes || ["Notes for grossRevenue"],
-          askingPrice: data?.business?.data?.asking_price?.notes || ["Notes for askingPrice"],
-          business: data?.business?.data?.business_notes || ["Notes for business"],
+          currentCashflow: data?.business?.data?.current_cashflow?.notes || [
+            "Notes for currentCashflow",
+          ],
+          expectedSalary: data?.business?.data?.expected_salary?.notes || [
+            "Notes for expectedSalary",
+          ],
+          grossRevenue: data?.business?.data?.gross_revenue?.notes || [
+            "Notes for grossRevenue",
+          ],
+          askingPrice: data?.business?.data?.asking_price?.notes || [
+            "Notes for askingPrice",
+          ],
+          business: data?.business?.data?.business_notes || [
+            "Notes for business",
+          ],
           // sde: data?.business?.data?.sde.notes || ["Notes for sde"],
           // projectedCashflow: data?.business?.data?.projected_cashflow.notes || ["Notes for projectedCashflow"],
           // totalDebtPayments: data?.business?.data?.loan_sba.notes || ["Notes for totalDebtPayments"],
@@ -141,19 +156,21 @@ const App: React.FC = () => {
         },
       });
 
-      setCustomMetrics(data?.business?.data?.custom_fields?.map((field:any) => ({
-        metricName: field.name,
-        metricValue: field.value,
-        metricType: field.type,
-        notes: field.notes,
-      })) || []);
+      setCustomMetrics(
+        data?.business?.data?.custom_fields?.map((field: any) => ({
+          metricName: field.name,
+          metricValue: field.value,
+          metricType: field.type,
+          notes: field.notes,
+        })) || []
+      );
     };
-    if(localStorage.getItem('user_id')){
+    if (localStorage.getItem("user_id")) {
       fetchData();
-      if(localStorage.getItem('business_payload')){
-        setIsUnAdded(true)
-        const business = JSON.parse(localStorage.getItem('business_payload')!);
-        setBusinessData({data: business})
+      if (localStorage.getItem("business_payload")) {
+        setIsUnAdded(true);
+        const business = JSON.parse(localStorage.getItem("business_payload")!);
+        setBusinessData({ data: business });
         setState({
           ...state,
           currentCashflow: business?.current_cashflow.value || 0,
@@ -167,7 +184,8 @@ const App: React.FC = () => {
           additional_loan_term: business?.additional_loan.term || 0,
           additional_loan_rate: business?.additional_loan.rate || 0,
           additionalLoanPayment: business?.additional_loan.amount || 0,
-          totalDebtPayments: (business?.loan_sba.amount + business?.additional_loan.amount) || 0,
+          totalDebtPayments:
+            business?.loan_sba.amount + business?.additional_loan.amount || 0,
           projectedNetProfitMargin: business?.net_profit_margin || 0,
           dscr: business?.dscr || 0,
           sdeMultiple: business?.sde_multiple || 0,
@@ -176,69 +194,90 @@ const App: React.FC = () => {
           loan_sba_amount: business?.loan_sba.amount || 0,
           newExpenses: business?.new_expenses.value || 0,
           additionalDebt: business?.additional_debt.value || 0,
-          notes:{
-          ...state.notes,
-          currentCashflow: business?.current_cashflow.notes || ["Notes for currentCashflow"],
-          expectedSalary: business?.data?.expected_salary.notes || ["Notes for expectedSalary"],
-          grossRevenue: business?.gross_revenue.notes || ["Notes for grossRevenue"],
-          askingPrice: business?.asking_price.notes || ["Notes for askingPrice"],
-          business: business?.business_notes || ["Notes for business"],
-          }
-        })
+          notes: {
+            ...state.notes,
+            currentCashflow: business?.current_cashflow.notes || [
+              "Notes for currentCashflow",
+            ],
+            expectedSalary: business?.data?.expected_salary.notes || [
+              "Notes for expectedSalary",
+            ],
+            grossRevenue: business?.gross_revenue.notes || [
+              "Notes for grossRevenue",
+            ],
+            askingPrice: business?.asking_price.notes || [
+              "Notes for askingPrice",
+            ],
+            business: business?.business_notes || ["Notes for business"],
+          },
+        });
       }
-      
-    }else{
-      const business = localStorage.getItem('business');
-      if(business){
-        setBusinessData({data: JSON.parse(business)})
+    } else {
+      const business = localStorage.getItem("business");
+      if (business) {
+        setBusinessData({ data: JSON.parse(business) });
         console.log("business", JSON.parse(business));
       }
     }
   }, []);
 
-  function calculateYearlyPayment(loan_amount:number, loan_term:number, loan_rate:number) {
+  function calculateYearlyPayment(
+    loan_amount: number,
+    loan_term: number,
+    loan_rate: number
+  ) {
     if (loan_amount <= 0 || loan_term <= 0 || loan_rate <= 0) {
-        return 0; // No payment needed if any parameter is zero or negative
+      return 0; // No payment needed if any parameter is zero or negative
     }
 
     // Convert the annual rate to a decimal
     const r = loan_rate / 100;
 
     // Calculate yearly payment using the annuity formula
-    const yearlyPayment = (r * loan_amount) / (1 - Math.pow((1 + r), -loan_term));
+    const yearlyPayment = (r * loan_amount) / (1 - Math.pow(1 + r, -loan_term));
 
     return Number(yearlyPayment.toFixed(2)); // Round to 2 decimal places
-}
-
+  }
 
   useEffect(() => {
     const calculateMetrics = () => {
+      const additionalLoanPayment = Math.round( calculateYearlyPayment(
+        state.additional_loan_amount,
+        state.additional_loan_term,
+        state.additional_loan_rate
+        ));
+      const sbaLoanPayment = Math.round(calculateYearlyPayment(
+        state.loan_sba_amount,
+        state.loan_sba_term,
+        state.loan_sba_rate
+      ));
 
-      const additionalLoanPayment = calculateYearlyPayment(state.additional_loan_amount, state.additional_loan_term, state.additional_loan_rate);
-      const sbaLoanPayment = calculateYearlyPayment(state.loan_sba_amount, state.loan_sba_term, state.loan_sba_rate);
+      const dscr =
+        state.totalDebtPayments > 0
+          ? Number(
+              (
+                (state.currentCashflow - state.expectedSalary) /
+                state.totalDebtPayments
+              ).toFixed(4)
+            )
+          : 0;
 
-      
-      
-      const dscr = state.totalDebtPayments > 0 
-        ? Number(((state.currentCashflow - state.expectedSalary) / state.totalDebtPayments).toFixed(4))
-        : 0;
-  
-      const projectedCashflow = state.currentCashflow - state.totalDebtPayments - state.newExpenses;
-  
-      const grossMultiple = state.grossRevenue > 0 
-        ? Number((state.askingPrice / state.grossRevenue).toFixed(2))
-        : 0;
-  
-      const sdeMultiple = state.sde > 0 
-        ? Number((state.askingPrice / state.sde).toFixed(2))
-        : 0;
-        
-  
-      const projectedNetProfitMargin = state.grossRevenue > 0 
-        ? Number(((projectedCashflow / state.grossRevenue) * 100).toFixed(2))
-        : 0;
+      const projectedCashflow =
+        state.currentCashflow - state.totalDebtPayments - state.newExpenses;
 
-  
+      const grossMultiple =
+        state.grossRevenue > 0
+          ? Number((state.askingPrice / state.grossRevenue).toFixed(2))
+          : 0;
+
+      const sdeMultiple =
+        state.sde > 0 ? Number((state.askingPrice / state.sde).toFixed(2)) : 0;
+
+      const projectedNetProfitMargin =
+        state.grossRevenue > 0
+          ? Number(((projectedCashflow / state.grossRevenue) * 100).toFixed(2))
+          : 0;
+
       setState((prevState) => ({
         ...prevState,
         // totalDebtPayments,
@@ -251,7 +290,7 @@ const App: React.FC = () => {
         sbaLoanPayment,
       }));
     };
-  
+
     calculateMetrics();
   }, [
     state.totalDebtPayments,
@@ -264,43 +303,63 @@ const App: React.FC = () => {
     state.loan_sba_amount,
     state.additional_loan_amount,
     state.newExpenses,
-    state.additionalDebt
+    state.additionalDebt,
   ]);
 
   useEffect(() => {
-    const totalDebtPayments = Number((state.sbaLoanPayment + state.additionalLoanPayment).toFixed(2)) || 0; 
+    const totalDebtPayments =
+      Number((state.sbaLoanPayment + state.additionalLoanPayment).toFixed(2)) ||
+      0;
     setState((prevState) => ({
       ...prevState,
-      totalDebtPayments
-    }))
-  },[
-    state.additionalLoanPayment,
-    state.sbaLoanPayment,
-  ])
-  
+      totalDebtPayments,
+    }));
+  }, [state.additionalLoanPayment, state.sbaLoanPayment]);
+
   const handleSave = async () => {
-   
-    let payload:any = {
-      current_cashflow: {value: state.currentCashflow, notes: state.notes.currentCashflow},
-      expected_salary: {value: state.expectedSalary, notes: state.notes.expectedSalary},
-      gross_revenue: {value: state.grossRevenue, notes: state.notes.grossRevenue},
-      asking_price: {value: state.askingPrice, notes: state.notes.askingPrice},
-      loan_sba: {amount: state.loan_sba_amount, term: state.loan_sba_term, rate: state.loan_sba_rate, notes: state.notes.sbaLoanPayment},
-      additional_loan: {amount: state.additional_loan_amount, term: state.additional_loan_term, rate: state.additional_loan_rate, notes: state.notes.additionalLoanPayment},
-      sde: {value: state.sde, notes: state.notes.sde},
-      dscr: {value: state.dscr},
-      gross_multiple: {value: state.grossMultiple},
-      sde_multiple: {value: state.sdeMultiple},
-      projected_cashflow: {value: state.projectedCashflow},
-      projected_net_profit_margin: {value: state.projectedNetProfitMargin},
-      total_debt_payments: {value: state.totalDebtPayments},
-      sba_loan_payment: {value: state.sbaLoanPayment},
-      additional_loan_payment: {value: state.additionalLoanPayment},
-      new_expenses: {value:state.newExpenses},
-      additional_debt: {value:state.additionalDebt}
+    let payload: any = {
+      current_cashflow: {
+        value: state.currentCashflow,
+        notes: state.notes.currentCashflow,
+      },
+      expected_salary: {
+        value: state.expectedSalary,
+        notes: state.notes.expectedSalary,
+      },
+      gross_revenue: {
+        value: state.grossRevenue,
+        notes: state.notes.grossRevenue,
+      },
+      asking_price: {
+        value: state.askingPrice,
+        notes: state.notes.askingPrice,
+      },
+      loan_sba: {
+        amount: state.loan_sba_amount,
+        term: state.loan_sba_term,
+        rate: state.loan_sba_rate,
+        notes: state.notes.sbaLoanPayment,
+      },
+      additional_loan: {
+        amount: state.additional_loan_amount,
+        term: state.additional_loan_term,
+        rate: state.additional_loan_rate,
+        notes: state.notes.additionalLoanPayment,
+      },
+      sde: { value: state.sde, notes: state.notes.sde },
+      dscr: { value: state.dscr },
+      gross_multiple: { value: state.grossMultiple },
+      sde_multiple: { value: state.sdeMultiple },
+      projected_cashflow: { value: state.projectedCashflow },
+      projected_net_profit_margin: { value: state.projectedNetProfitMargin },
+      total_debt_payments: { value: state.totalDebtPayments },
+      sba_loan_payment: { value: state.sbaLoanPayment },
+      additional_loan_payment: { value: state.additionalLoanPayment },
+      new_expenses: { value: state.newExpenses },
+      additional_debt: { value: state.additionalDebt },
     };
 
-    if(customMetrics.length >= 0){
+    if (customMetrics.length >= 0) {
       payload = {
         ...payload,
         custom_fields: customMetrics.map((metric) => ({
@@ -309,48 +368,61 @@ const App: React.FC = () => {
           type: metric.metricType,
           notes: metric.notes,
         })),
-      }
+      };
     }
-    if(localStorage.getItem('user_id')){
-      if(isUnAdded){
-        const updated = await addBusiness({...businessData?.data, ...payload});
+    if (localStorage.getItem("user_id")) {
+      if (isUnAdded) {
+        const updated = await addBusiness({
+          ...businessData?.data,
+          ...payload,
+        });
         console.log("updated", updated);
-        setHasChanges(false)
-        setIsUnAdded(false)
-        localStorage.removeItem('business_payload')
-        localStorage.removeItem('business')
-      }else{
+        setHasChanges(false);
+        setIsUnAdded(false);
+        localStorage.removeItem("business_payload");
+        localStorage.removeItem("business");
+      } else {
         const updated = await updateBusiness(businessid || "", payload);
         console.log("updated", updated);
-        setHasChanges(false)
+        setHasChanges(false);
       }
-    }else{
-      localStorage.setItem('business_payload', JSON.stringify({...businessData?.data, ...payload}));
-      navigate('/login')
-      setHasChanges(false)
+    } else {
+      localStorage.setItem(
+        "business_payload",
+        JSON.stringify({ ...businessData?.data, ...payload })
+      );
+      navigate("/login");
+      setHasChanges(false);
     }
-  }
+  };
 
+  const updateLoanSba = (value: {
+    amount: number;
+    term: number;
+    rate: number;
+  }) => {
+    setState((prevState) => ({
+      ...prevState,
+      loan_sba_amount: value.amount,
+      loan_sba_term: value.term,
+      loan_sba_rate: value.rate,
+    }));
+  };
+  const updateLoanAdditionalLoan = (value: {
+    amount: number;
+    term: number;
+    rate: number;
+  }) => {
+    setState((prevState) => ({
+      ...prevState,
+      additional_loan_amount: value.amount,
+      additional_loan_term: value.term,
+      additional_loan_rate: value.rate,
+    }));
+  };
 
-  const updateLoanSba = (value: {amount:number, term:number, rate:number}) => {
-        setState((prevState) => ({
-          ...prevState,
-          loan_sba_amount: value.amount,
-          loan_sba_term: value.term,
-          loan_sba_rate: value.rate,
-        }));
-  }
-  const updateLoanAdditionalLoan = (value: {amount:number, term:number, rate:number}) => {
-        setState((prevState) => ({
-          ...prevState,
-          additional_loan_amount: value.amount,
-          additional_loan_term: value.term,
-          additional_loan_rate: value.rate,
-        }));
-  }
-  
   const updateNotes = async (key: string, value: string) => {
-    setHasChanges(true)
+    setHasChanges(true);
     setState((prevState) => ({
       ...prevState,
       notes: {
@@ -358,7 +430,7 @@ const App: React.FC = () => {
         [key]: value.split("\n"),
       },
     }));
-  }
+  };
 
   // const updateStateBackend = async (key:string, value:number) => {
   //   let payload = {}
@@ -395,7 +467,7 @@ const App: React.FC = () => {
 
   //     const updated = await updateBusiness(businessid || "", payload);
   //     console.log("updated", updated);
-      
+
   // }
 
   const metricCards = cardOrder.map((id) => ({
@@ -405,11 +477,9 @@ const App: React.FC = () => {
   }));
 
   const updateState = async (key: string, value: number | string) => {
-    setHasChanges(true)
+    setHasChanges(true);
     setState((prevState) => ({ ...prevState, [key]: value }));
   };
-
-  
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -429,7 +499,11 @@ const App: React.FC = () => {
             value={state.currentCashflow}
             onSave={(value) => updateState("currentCashflow", value)}
           >
-            <CurrentCashflow updateNotes={updateNotes} state={state} updateState={updateState} />
+            <CurrentCashflow
+              updateNotes={updateNotes}
+              state={state}
+              updateState={updateState}
+            />
           </Card>
         );
       case "expectedSalary":
@@ -438,7 +512,11 @@ const App: React.FC = () => {
             value={state.expectedSalary}
             onSave={(value) => updateState("expectedSalary", value)}
           >
-            <ExpectedSalary updateNotes={updateNotes} state={state} updateState={updateState} />
+            <ExpectedSalary
+              updateNotes={updateNotes}
+              state={state}
+              updateState={updateState}
+            />
           </Card>
         );
       case "grossRevenue":
@@ -447,7 +525,11 @@ const App: React.FC = () => {
             value={state.grossRevenue}
             onSave={(value) => updateState("grossRevenue", value)}
           >
-            <GrossRevenue updateNotes={updateNotes} state={state} updateState={updateState} />
+            <GrossRevenue
+              updateNotes={updateNotes}
+              state={state}
+              updateState={updateState}
+            />
           </Card>
         );
       case "askingPrice":
@@ -456,24 +538,22 @@ const App: React.FC = () => {
             value={state.askingPrice}
             onSave={(value) => updateState("askingPrice", value)}
           >
-            <AskingPrice updateNotes={updateNotes} state={state} updateState={updateState} />
+            <AskingPrice
+              updateNotes={updateNotes}
+              state={state}
+              updateState={updateState}
+            />
           </Card>
         );
       case "sde":
         return (
-          <Card
-            value={state.sde}
-            onSave={(value) => updateState("sde", value)}
-          >
+          <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
             <SDE state={state} updateState={updateState} />
           </Card>
         );
       case "DSCRCalculator":
         return (
-          <Card
-            value={state.sde}
-            onSave={(value) => updateState("sde", value)}
-          >
+          <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
             <DSCRCalculator state={state} updateState={updateState} />
           </Card>
         );
@@ -488,19 +568,13 @@ const App: React.FC = () => {
         );
       case "GrossMultiple":
         return (
-          <Card
-            value={state.sde}
-            onSave={(value) => updateState("sde", value)}
-          >
+          <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
             <GrossMultiple state={state} updateState={updateState} />
           </Card>
         );
       case "SDEMultiple":
         return (
-          <Card
-            value={state.sde}
-            onSave={(value) => updateState("sde", value)}
-          >
+          <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
             <SDEMultiple state={state} updateState={updateState} />
           </Card>
         );
@@ -510,7 +584,11 @@ const App: React.FC = () => {
             value={state.sbaLoanPayment}
             onSave={(value) => updateState("sbaLoanPayment", value)}
           >
-            <SBALoanPayment updateLoanSba={updateLoanSba} state={state} updateState={updateState} />
+            <SBALoanPayment
+              updateLoanSba={updateLoanSba}
+              state={state}
+              updateState={updateState}
+            />
           </Card>
         );
       case "AdditionalLoanPayment":
@@ -519,7 +597,11 @@ const App: React.FC = () => {
             value={state.additionalLoanPayment}
             onSave={(value) => updateState("additionalLoanPayment", value)}
           >
-            <AdditionalLoanPayment updateAdditionalLoan={updateLoanAdditionalLoan} state={state} updateState={updateState} />
+            <AdditionalLoanPayment
+              updateAdditionalLoan={updateLoanAdditionalLoan}
+              state={state}
+              updateState={updateState}
+            />
           </Card>
         );
       case "TotalDebtPayments":
@@ -533,25 +615,24 @@ const App: React.FC = () => {
         );
       case "ProjectedNetProfitMargin":
         return (
-          <Card
-            value={state.sde}
-            onSave={(value) => updateState("sde", value)}
-          >
+          <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
             <ProjectedNetProfitMargin state={state} updateState={updateState} />
           </Card>
         );
       case "customMetric":
         return (
-          <Card
-          value={state.sde}
-          onSave={(value) => updateState("sde", value)}
-        >
-          <MetricCard state={customMetrics[0]} updateMetric={setCustomMetrics} deleteCard={(name) => {
-            setHasChanges(true)
-            setCustomMetrics(customMetrics.filter((metric) => metric.metricName !== name))
-          }} />
-        </Card>
-            
+          <Card value={state.sde} onSave={(value) => updateState("sde", value)}>
+            <MetricCard
+              state={customMetrics[0]}
+              updateMetric={setCustomMetrics}
+              deleteCard={(name) => {
+                setHasChanges(true);
+                setCustomMetrics(
+                  customMetrics.filter((metric) => metric.metricName !== name)
+                );
+              }}
+            />
+          </Card>
         );
       default:
         return null;
@@ -560,107 +641,130 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container min-h-screen bg-blue-100 ">
-      <TopBar data={businessData?.data} />
+      <TopBar state={state} data={businessData?.data} />
       <DragDropContext onDragEnd={handleDragEnd}>
-  <Droppable droppableId="metrics-grid">
-    {(provided) => (
-      <div
-        ref={provided.innerRef}
-        {...provided.droppableProps}
-        style={{
-          backgroundColor: "#E3F2FD", // Tailwind gray-300
-          borderRadius: "12px", // Rounded corners
-          padding: "16px", // Padding for spacing
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-          gap: "12px",
-          minHeight: "100px",
-        }}
-        className="shadow-sm"
-      >
-        {metricCards
-          .filter(
-            (card) =>
-              ![
-                "sba_loan_amount",
-                "sba_loan_rate",
-                "sba_loan_term",
-                "additional_debt",
-                "additional_loan_amount",
-                "additional_loan_rate",
-                "additional_loan_term",
-                "growth_rate",
-              ].includes(card.id)
-          )
-          .map((card, index) => (
-            <Draggable
-              key={card.id}
-              draggableId={card.id}
-              index={index}
+        <Droppable droppableId="metrics-grid">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{
+                backgroundColor: "#E3F2FD", // Tailwind gray-300
+                borderRadius: "12px", // Rounded corners
+                padding: "16px", // Padding for spacing
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                gap: "12px",
+                minHeight: "100px",
+              }}
+              className="shadow-sm"
             >
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  style={{
-                    ...provided.draggableProps.style,
-                    opacity: snapshot.isDragging ? 0.8 : 1,
-                    // backgroundColor: "#FFFFFF", // White card background
-                    borderRadius: "8px", // Card corners
-                    // padding: "8px",
-                    // boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
+              {metricCards
+                .filter(
+                  (card) =>
+                    ![
+                      "sba_loan_amount",
+                      "sba_loan_rate",
+                      "sba_loan_term",
+                      "additional_debt",
+                      "additional_loan_amount",
+                      "additional_loan_rate",
+                      "additional_loan_term",
+                      "growth_rate",
+                    ].includes(card.id)
+                )
+                .map((card, index) => (
+                  <Draggable key={card.id} draggableId={card.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                          ...provided.draggableProps.style,
+                          opacity: snapshot.isDragging ? 0.8 : 1,
+                          // backgroundColor: "#FFFFFF", // White card background
+                          borderRadius: "8px", // Card corners
+                          // padding: "8px",
+                          // boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                        }}
+                      >
+                        {renderCard(card.id)}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+
+              {customMetrics.map((card, index) => (
+                <Draggable
+                  key={card.metricName}
+                  draggableId={card.metricName}
+                  index={index}
                 >
-                  {renderCard(card.id)}
-                </div>
-              )}
-            </Draggable>
-          ))}
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={{
+                        ...provided.draggableProps.style,
+                        opacity: snapshot.isDragging ? 0.8 : 1,
+                        // backgroundColor: "#FFFFFF", // White card background
+                        borderRadius: "8px", // Card corners
+                        // padding: "8px",
+                        // boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <Card
+                        value={state.sde}
+                        onSave={(value) => updateState("sde", value)}
+                      >
+                        <MetricCard
+                          state={customMetrics[index]}
+                          updateMetric={setCustomMetrics}
+                          deleteCard={(name) => {
+                            setHasChanges(true);
+                            setCustomMetrics(
+                              customMetrics.filter(
+                                (metric) => metric.metricName !== name
+                              )
+                            );
+                          }}
+                        />
+                      </Card>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
 
-        {customMetrics.map((card, index) => (
-          <Draggable
-            key={card.metricName}
-            draggableId={card.metricName}
-            index={index}
-          >
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                style={{
-                  ...provided.draggableProps.style,
-                  opacity: snapshot.isDragging ? 0.8 : 1,
-                  // backgroundColor: "#FFFFFF", // White card background
-                  borderRadius: "8px", // Card corners
-                  padding: "8px",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                {renderCard("customMetric")}
-              </div>
-            )}
-          </Draggable>
-        ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
 
-        {provided.placeholder}
-      </div>
-    )}
-  </Droppable>
-</DragDropContext>
-
-     
-     <div className="flex justify-between m-4">
-       {/* <Button className="bg-blue-500 text-white" onClick={() => setReportModalOpen(true)}>Download Report</Button>
+      <div className="flex justify-between mx-4 mt-4 pb-3">
+        {/* <Button className="bg-blue-500 text-white" onClick={() => setReportModalOpen(true)}>Download Report</Button>
        <NotesComponent state={state} updateState={updateState} />
         */}
-         <Card value={0} onSave={(value) => updateState("customMetric", value)}>
-                <CustomMetric customMetrics={customMetrics} setCustomMetrics={setCustomMetrics} state={state} updateState={updateState} />
-                </Card>
-       {(hasChanges || isUnAdded) && <Button className="bg-green-500 text-white" onClick={handleSave}>Save Changes</Button>}
-     </div>
-     {reportModalOpen && <ReportModal data={state} close={() => setReportModalOpen(false)} />}
+        <Card value={0} onSave={(value) => updateState("customMetric", value)}>
+          <CustomMetric
+            customMetrics={customMetrics}
+            setCustomMetrics={setCustomMetrics}
+            setHasChanges={setHasChanges}
+            state={state}
+            updateState={updateState}
+          />
+        </Card>
+        {(hasChanges || isUnAdded) && (
+          <Button className="bg-green-500 text-white" onClick={handleSave}>
+            Save Changes
+          </Button>
+        )}
+      </div>
+      {reportModalOpen && (
+        <ReportModal data={state} close={() => setReportModalOpen(false)} />
+      )}
     </div>
   );
 };

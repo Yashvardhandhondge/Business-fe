@@ -71,14 +71,15 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
     <div className="m-1 h-full">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <div className="bg-white shadow-md p-4 rounded-md cursor-pointer hover:shadow-lg h-full  relative">
-          <div className="flex gap-2justify-between items-center">
-              <h3 className="flex-1">SBA Loan Payment</h3>
+          <div className="bg-white flex flex-col rounded-xl border border-gray-400 shadow-md p-4 cursor-pointer hover:shadow-lg h-full relative">
+          <div className="flex gap-2 mb-2 justify-between items-center">
+             <h3 className="flex-1 text-xs text-gray-500">SBA Loan Payment</h3>
               <button className="text-sm text-gray-500 mx-2" onClick={(e) =>{e.preventDefault(); setIsNotesOpen(true)}}>
                 <NotepadText className="w-4 h-4" /> 
               </button>
             </div>
-            <p className="text-2xl text-blue-500">{`$${state.sbaLoanPayment}`} <span className="text-sm text-gray-500">/year</span></p>
+            <p className="text-xl flex-1  text-blue-500">{`$${state.sbaLoanPayment.toLocaleString()}`} <span className="text-sm text-gray-500">/year</span></p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sbaLoanPayment[0] || "No notes"}</p>
           </div>
         </DialogTrigger>
         <DialogContent>
@@ -124,13 +125,10 @@ const SbaLoanPaymentCard: React.FC<Props> = ({ state, updateLoanSba }) => {
             </label>
             <Input
               id="loanRate"
-              type="text"
+              type="number"
               value={loanRate?.toLocaleString()}
               onChange={(e) => {
-                const numericValue = e.target.value.replace(/,/g, '');
-                if (!isNaN(Number(numericValue))) {
-                  setLoanRate(Number(numericValue));
-                }
+                setLoanRate(Number(e.target.value));
               }}
               placeholder="Enter Loan Rate"
               className="w-full"

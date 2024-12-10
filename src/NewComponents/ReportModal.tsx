@@ -57,10 +57,11 @@ const generatePDF = (data: any) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="absolute top-0 right-0 p-4">
-            <X className="w-10 h-10 text-gray-100 cursor-pointer" onClick={close}/>
+        
+      <div className="bg-white rounded-lg p-6 w-96 max-h-[80vh] overflow-y-auto relative">
+      <div className="absolute top-0 right-0 p-4">
+            <X className="w-6 h-6 text-gray-500 cursor-pointer" onClick={close}/>
         </div>
-      <div className="bg-white rounded-lg p-6 w-96 max-h-[80vh] overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4 text-center">Download Report</h2>
         <div className="flex justify-center items-center"> 
             <Button onClick={() => generatePDF(data)}>Download PDF</Button>
