@@ -1,15 +1,16 @@
 import React from "react";
-import { ArrowLeft, LinkIcon, Loader2, PencilIcon, Upload, X } from 'lucide-react';
+import { ArrowLeft, FileText, Loader2, PencilIcon, Upload, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast, ToastContainer } from 'react-toastify';
 import useBusinessStore from "../store/buisnessSrore";
 import FilesModal from "./FilesModal";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
+import EditModal from "./EditModal";
 
-function shortenURL(url: string, maxLength = 30): string {
+function shortenURL(url: string, maxLength = 20): string {
   return url.length > maxLength ? `${url.slice(0, maxLength)}...` : url;
 }
 
@@ -18,23 +19,32 @@ export default function TopBar({ data }: { data: any, state: any }) {
   const [isUploading, setIsUploading] = React.useState(false);
   const [showFilesModal, setShowFilesModal] = React.useState(false);
   const [showNotesModal, setShowNotesModal] = React.useState(false);
+  const [showEditModal, setShowEditModal] = React.useState(false);
   const [notes, setNotes] = React.useState("");
+  const [files, setFiles] = React.useState([]);
   const navigate = useNavigate();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (data) {
       setNotes(data.business_notes);
+      setFiles(data.business_attachments);
+    }
+    if(localStorage.getItem('business')){
+      const business = JSON.parse(localStorage.getItem('business') || '');
+      setNotes(business.business_notes);
+      setFiles(business.business_attachments);
     }
   }, [data]);
 
   const handleSaveChanges = () => {
     if (localStorage.getItem('user_id') === null) {
-      const business_payload = localStorage.getItem('business_payload');
+      const business_payload = localStorage.getItem('business');
       if (!business_payload) return;
       const business = JSON.parse(business_payload || '');
       business.business_notes = notes;
-      localStorage.setItem('business_payload', JSON.stringify(business));
+      localStorage.setItem('business', JSON.stringify(business));
+      setShowNotesModal(false);
     } else {
       updateBusiness(data?._id, { business_notes: notes });
     }
@@ -67,6 +77,12 @@ export default function TopBar({ data }: { data: any, state: any }) {
     }
   };
 
+  const handleDeleteFile = async (fileUrl: string) => {
+    setFiles(files.filter((file: any) => file.url !== fileUrl));
+    await updateBusiness(data?._id, { business_attachments: files.filter((file: any) => file.url !== fileUrl) });
+    window.location.reload();
+  }
+
   const isTokenAvailable = Boolean(localStorage.getItem('token'));
 
   return (
@@ -81,21 +97,21 @@ export default function TopBar({ data }: { data: any, state: any }) {
       </header>
       <div className="w-full border border-solid bg-white h-0.5"></div>
       <main className="m-1">
-        <Card className="h-44 mx-3">
+        <Card className=" mx-3">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="space-y-3 w-full">
                 <div className="flex justify-between w-full">
                   <CardTitle>{data?.business_name}</CardTitle>
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => {
+                  <Button variant="ghost" size="icon" className="px-2 w-auto h-8" onClick={() => {
                     if (!isTokenAvailable) {
-                      toast.warn("Please login to upload.");
+                      toast.warn("Please save before editing.");
                     }else{
-                      setShowFilesModal(true);
+                      setShowEditModal(true);
                     }
                   }}>
-                    <LinkIcon className="h-4 w-4" />
-                    <span className="sr-only">Share or copy link</span>
+                    <p className="text-sm text-gray-500">Edit Data</p>
+                    <PencilIcon className="h-2 w-2" />
                   </Button>
                 </div>
               </div>
@@ -106,14 +122,30 @@ export default function TopBar({ data }: { data: any, state: any }) {
                 {shortenURL(data?.business_url || "")}
               </a>
 
-              {isUploading ? (
+              
+              
+            </div>
+            
+            <div>
+            {notes ? (
+              <div className="flex gap-2 items-center">
+                <p className="text-sm text-gray-500 w-full ">Description: {notes}</p>
+                {/* <Button variant="ghost" onClick={() => setShowNotesModal(true)}><PencilIcon className="h-4 w-4" /></Button> */}
+              </div>
+            ) : (
+              <Button className="bg-transparent text-black hover:bg-transparent shadow-none" onClick={() => setShowNotesModal(true)}>
+                Add Description </Button>
+            )}
+            </div>
+            <div className="py-3 flex flex-wrap gap-2"> 
+            {isUploading ? (
                 <Loader2 className="animate-spin" />
               ) : (
                 <Button
                   // disabled={!isTokenAvailable}
                   variant="ghost"
                   size="icon"
-                  className="h-6 w-6 p-0"
+                  className="h-10 w-10 p-0"
                   onClick={() => {
                     if (!isTokenAvailable) {
                       toast.warn("Please login to upload.");
@@ -121,20 +153,37 @@ export default function TopBar({ data }: { data: any, state: any }) {
                     handleUploadClick();
                   }}}
                 >
-                  <Upload className="h-4 w-4 text-blue-600" />
+                  <Upload className="h-10 w-10 text-blue-600" />
                   <span className="sr-only">Upload image</span>
                 </Button>
               )}
-            </div>
-            {data?.business_notes ? (
-              <div className="flex gap-2 items-center">
-                <p className="text-sm text-gray-500">Description: {notes}</p>
-                <Button variant="ghost" onClick={() => setShowNotesModal(true)}><PencilIcon className="h-4 w-4" /></Button>
+              {files?.length > 0 && files.map((file: any, index: any) => (
+              <div className="flex items-center gap-2">
+              <a
+                key={index}
+                href={file.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline transition text-xs"
+              >
+                <FileText className="h-3 w-3 text-gray-500" />
+                <span>{`${shortenURL(file.name)}`}</span>
+              </a>
+                <Button variant="ghost" size="icon" className="h-6 w-6 p-0" onClick={(e) => {
+                  e.stopPropagation();
+                  if (!isTokenAvailable) {
+                    toast.warn("Please login to delete.");
+                  }else{
+                  handleDeleteFile(file.url);
+                }}}>
+                  <X className="h-4 w-4 text-red-600" />
+                  <span className="sr-only">Delete</span>
+                </Button>
               </div>
-            ) : (
-              <Button className="bg-transparent text-black hover:bg-transparent shadow-none " onClick={() => setShowNotesModal(true)}>
-                Add Description </Button>
-            )}
+            ))}
+           
+            </div>
             {showNotesModal && (
               <div className="fixed inset-0 -top-5 flex items-center justify-center bg-black bg-opacity-50 z-50">
                 <div className="bg-white rounded-lg shadow-lg w-96 p-4">
@@ -157,8 +206,8 @@ export default function TopBar({ data }: { data: any, state: any }) {
                 </div>
               </div>
             )}
+             
           </CardHeader>
-          <CardContent className="space-y-4"></CardContent>
         </Card>
       </main>
       <input
@@ -169,6 +218,7 @@ export default function TopBar({ data }: { data: any, state: any }) {
         style={{ display: "none" }}
       />
       {showFilesModal && <FilesModal files={data?.business_attachments} close={() => setShowFilesModal(false)} state={data} />}
+      {showEditModal && <EditModal close={() => setShowEditModal(false)} data={data} />}
     </div>
   );
 }

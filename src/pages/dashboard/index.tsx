@@ -199,8 +199,14 @@ const App: React.FC = () => {
       }
     } else {
       const business = localStorage.getItem("business");
+      setIsUnAdded(true);
       if (business) {
         setBusinessData({ data: JSON.parse(business) });
+        setState({
+          ...state,
+          currentCashflow: JSON.parse(business)?.current_cashflow.value || 0,
+          askingPrice: JSON.parse(business)?.asking_price.value || 0,
+        });
         console.log("business", JSON.parse(business));
       }
     }
@@ -366,7 +372,7 @@ const App: React.FC = () => {
         setIsUnAdded(false);
         localStorage.removeItem("business_payload");
         localStorage.removeItem("business");
-        if(updated.updatedBusiness){
+        if(updated.business){
           toast.success("Business added successfully!");
         } else {
           toast.error("Failed to add business!");

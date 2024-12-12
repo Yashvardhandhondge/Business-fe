@@ -23,7 +23,6 @@ const SDE: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sde, setSDE] = useState(state.sde);
   const [notes, setNotes] = useState("");
-  const [showMessageBox, setShowMessageBox] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -33,8 +32,6 @@ const SDE: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const handleSaveChanges = () => {
     updateState("sde", sde);
     updateNotes("sde", notes);
-    setShowMessageBox(true); 
-    setTimeout(() => setShowMessageBox(false), 3000); 
     setIsDialogOpen(false);
   };
 
@@ -46,11 +43,7 @@ const SDE: React.FC<Props> = ({ state, updateState, updateNotes }) => {
 
   return (
     <div className="m-1 h-full">
-      {showMessageBox && (
-        <div className="absolute top-2 left-2 bg-green-500 text-white p-2 rounded-md shadow-md">
-          SDE Value has been updated!
-        </div>
-      )}
+      
       {/* <MessageCircle className="absolute top-2 right-2 text-xl text-gray-500" /> */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>

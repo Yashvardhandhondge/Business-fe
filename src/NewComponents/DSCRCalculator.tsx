@@ -25,7 +25,6 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
   const [totalDebtPayment, setTotalDebtPayment] = useState(state.totalDebtPayments);
   const [dscr, setDscr] = useState(state.dscr);
   const [notes, setNotes] = useState("");
-  const [showMessageBox, setShowMessageBox] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
 
@@ -41,8 +40,6 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
     updateState("expectedSalary", expectedSalary);
     updateState("totalDebtPayments", totalDebtPayment);
     updateState("dscr", dscr);
-    setShowMessageBox(true);
-    setTimeout(() => setShowMessageBox(false), 3000); 
     setIsDialogOpen(false);
   };
 
@@ -56,11 +53,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
 
   return (
     <div className="m-1 h-full">
-      {showMessageBox && (
-        <div className="absolute top-2 left-2 bg-green-500 text-white p-2 rounded-md shadow-md">
-          DSCR Calculator values updated!
-        </div>
-      )}
+      
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <div className="bg-white flex flex-col rounded-xl border border-gray-400 shadow-md p-4 cursor-pointer hover:shadow-lg h-full relative">
