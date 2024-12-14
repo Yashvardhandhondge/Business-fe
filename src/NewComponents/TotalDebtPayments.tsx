@@ -33,6 +33,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState,updateNotes }) 
     setSbaLoanPayment(state.sbaLoanPayment);
     setAdditionalLoanPayment(state.additionalLoanPayment);
     // setAdditionalDebt(state.additionalDebt);
+    setNotes(state.notes.totalDebtPayments)
   } ,[state]);
 
   const handleSaveChanges = () => {
@@ -142,7 +143,7 @@ const TotalDebtPayments: React.FC<Props> = ({ state, updateState,updateNotes }) 
           </div>
         </DialogContent>
       </Dialog>
-      {isNotesOpen && <Notes notes={state.notes.totalDebtPayments} title="Total Debt Payments" close={() => setIsNotesOpen(false)} />}    
+      {isNotesOpen && <Notes notes={[notes]} title="Total Debt Payments" close={() => setIsNotesOpen(false)} />}    
     </div>
   );
 };

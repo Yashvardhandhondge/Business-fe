@@ -19,7 +19,7 @@ interface Props {
 updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState}) => {
+const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState, updateNotes}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [netProfitMargin, setNetProfitMargin] = useState(state.projectedNetProfitMargin);
   const [projectedCashflow, setProjectedCashflow] = useState(state.projectedCashflow);
@@ -31,12 +31,14 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState}) => {
     setNetProfitMargin(state.projectedNetProfitMargin);
     setProjectedCashflow(state.projectedCashflow);
     setGrossRevenue(state.grossRevenue);
+    setNotes(state.notes.projectedNetProfitMargin)
   }, [state]);
 
   const handleSaveChanges = () => {
     updateState("projectedNetProfitMargin", netProfitMargin);
     updateState("projectedCashflow", projectedCashflow);
     updateState("grossRevenue", grossRevenue);
+    updateNotes("projectedNetProfitMargin", notes);
     setIsDialogOpen(false);
   };
 

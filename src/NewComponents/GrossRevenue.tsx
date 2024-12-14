@@ -18,7 +18,7 @@ interface Props {
   updateNotes: (key: string, value: string) => void
 }
 
-const GrossRevenue: React.FC<Props> = ({ state, updateState }) => {
+const GrossRevenue: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
   const [revenue, setRevenue] = useState<number>(state.grossRevenue); 
   const [notes, setNotes] = useState<string>(""); 
@@ -31,6 +31,7 @@ const GrossRevenue: React.FC<Props> = ({ state, updateState }) => {
   
   const handleSaveChanges = () => {
     updateState("grossRevenue", revenue); 
+    updateNotes("grossRevenue", notes)
     setNotes(""); 
     setIsDialogOpen(false); 
   };

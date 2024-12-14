@@ -19,7 +19,7 @@ interface Props {
 updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const GrossMultipleCard: React.FC<Props> = ({ state, updateState }) => {
+const GrossMultipleCard: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [grossMultiple, setGrossMultiple] = useState(state.askingPrice / state.grossRevenue);
   const [askingPrice, setAskingPrice] = useState(state.askingPrice);
@@ -32,12 +32,14 @@ const GrossMultipleCard: React.FC<Props> = ({ state, updateState }) => {
     setGrossMultiple(state.grossMultiple);
     setAskingPrice(state.askingPrice);
     setGrossRevenue(state.grossRevenue);
+    setNotes(state.notes.grossMultiple)
   },[state])
 
   const handleSaveChanges = () => {
     updateState("grossMultiple", grossMultiple);
     updateState("askingPrice", askingPrice);
     updateState("grossRevenue", grossRevenue);
+    updateNotes("grossMultiple", notes);
     
     setIsDialogOpen(false);
   };

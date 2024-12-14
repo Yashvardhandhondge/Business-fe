@@ -18,7 +18,7 @@ interface Props {
 updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
+const DSCRCalculator: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dscrCurrentCashflow, setDscrCurrentCashflow] = useState(state.currentCashflow);
   const [expectedSalary, setExpectedSalary] = useState(state.expectedSalary);
@@ -33,6 +33,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
     setExpectedSalary(state.expectedSalary);
     setTotalDebtPayment(state.totalDebtPayments);
     setDscr(state.dscr);
+    setNotes(state.notes.dscr)
   },[state]);
 
   const handleSaveChanges = () => {
@@ -40,6 +41,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
     updateState("expectedSalary", expectedSalary);
     updateState("totalDebtPayments", totalDebtPayment);
     updateState("dscr", dscr);
+    updateNotes("dscr", notes)
     setIsDialogOpen(false);
   };
 
@@ -154,7 +156,7 @@ const DSCRCalculator: React.FC<Props> = ({ state, updateState }) => {
           </div>
         </DialogContent>
       </Dialog>
-      {isNotesOpen && <Notes notes={state.notes.dscr} title="DSCR" close={() => setIsNotesOpen(false)} />}
+      {isNotesOpen && <Notes notes={[notes]} title="DSCR" close={() => setIsNotesOpen(false)} />}
     </div>
   );
 };

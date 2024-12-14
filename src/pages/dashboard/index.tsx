@@ -104,11 +104,11 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchBusiness(businessid || "");
-      console.log(data);
+      console.log(data)
       setBusinessData(data?.business);
       setState({
         ...state,
-        currentCashflow: data?.business?.data?.current_cashflow.value || 0,
+        currentCashflow: data?.business?.data?.current_cashflow?.value || 0,
         expectedSalary: data?.business?.data?.expected_salary?.value || 0,
         grossRevenue: data?.business?.data?.gross_revenue?.value || 0,
         askingPrice: data?.business?.data?.asking_price?.value || 0,
@@ -140,12 +140,15 @@ const App: React.FC = () => {
           grossRevenue: data?.business?.data?.gross_revenue?.notes || [],
           askingPrice: data?.business?.data?.asking_price?.notes || [],
           business: data?.business?.data?.business_notes || [],
-          sde: data?.business?.data?.sde.notes || [],
-          projectedCashflow: data?.business?.data?.projected_cashflow.notes || [],
-          totalDebtPayments: data?.business?.data?.loan_sba.notes || [],
-          sbaLoanPayment: data?.business?.data?.loan_sba.notes || [],
-          additionalLoanPayment: data?.business?.data?.additional_loan.notes || [],
-          projectedNetProfitMargin: data?.business?.metrics?.net_profit_margin.notes || [],
+          sde: data?.business?.data?.sde?.notes || [],
+          sdeMultiple: data?.business?.data?.sde_multiple?.notes || [],
+          projectedCashflow: data?.business?.data?.projected_cashflow?.notes || [],
+          totalDebtPayments: data?.business?.data?.total_debt_payments?.notes || [],
+          sbaLoanPayment: data?.business?.data?.loan_sba?.notes || [],
+          additionalLoanPayment: data?.business?.data?.additional_loan?.notes || [],
+          projectedNetProfitMargin: data?.business?.data?.projected_net_profit_margin?.notes || [],
+          grossMultiple: data?.business?.data?.gross_multiple?.notes || [],
+          dscr: data?.business?.data?.dscr?.notes || [],
         },
       });
 
@@ -157,9 +160,13 @@ const App: React.FC = () => {
           notes: field.notes,
         })) || []
       );
+      
     };
+    
     if (localStorage.getItem("user_id")) {
+      
       fetchData();
+      
       if (localStorage.getItem("business_payload")) {
         setIsUnAdded(true);
         const business = JSON.parse(localStorage.getItem("business_payload")!);
@@ -189,15 +196,15 @@ const App: React.FC = () => {
           additionalDebt: business?.additional_debt.value || 0,
           notes: {
             ...state.notes,
-            currentCashflow: business?.current_cashflow.notes || [],
-            expectedSalary: business?.data?.expected_salary.notes || [],
-            grossRevenue: business?.gross_revenue.notes || [],
-            askingPrice: business?.asking_price.notes || [],
+            currentCashflow: business?.current_cashflow?.notes || [],
+            expectedSalary: business?.data?.expected_salary?.notes || [],
+            grossRevenue: business?.gross_revenue?.notes || [],
+            askingPrice: business?.asking_price?.notes || [],
             business: business?.business_notes || [],
           },
         });
       }
-    } else {
+    }else{      
       const business = localStorage.getItem("business");
       setIsUnAdded(true);
       if (business) {
@@ -338,14 +345,14 @@ const App: React.FC = () => {
         notes: state.notes.additionalLoanPayment,
       },
       sde: { value: state.sde, notes: state.notes.sde },
-      dscr: { value: state.dscr },
-      gross_multiple: { value: state.grossMultiple },
-      sde_multiple: { value: state.sdeMultiple },
-      projected_cashflow: { value: state.projectedCashflow },
-      projected_net_profit_margin: { value: state.projectedNetProfitMargin },
-      total_debt_payments: { value: state.totalDebtPayments },
-      sba_loan_payment: { value: state.sbaLoanPayment },
-      additional_loan_payment: { value: state.additionalLoanPayment },
+      dscr: { value: state.dscr, notes: state.notes.dscr },
+      gross_multiple: { value: state.grossMultiple, notes: state.notes.grossMultiple },
+      sde_multiple: { value: state.sdeMultiple, notes: state.notes.sdeMultiple },
+      projected_cashflow: { value: state.projectedCashflow, notes: state.notes.projectedCashflow },
+      projected_net_profit_margin: { value: state.projectedNetProfitMargin, notes: state.notes.projectedNetProfitMargin },
+      total_debt_payments: { value: state.totalDebtPayments, notes:state.notes.totalDebtPayments },
+      sba_loan_payment: { value: state.sbaLoanPayment, notes: state.notes.sbaLoanPayment },
+      additional_loan_payment: { value: state.additionalLoanPayment, notes: state.notes.additionalLoanPayment },
       new_expenses: { value: state.newExpenses },
       additional_debt: { value: state.additionalDebt },
     };
@@ -435,43 +442,7 @@ const App: React.FC = () => {
     }));
   };
 
-  // const updateStateBackend = async (key:string, value:number) => {
-  //   let payload = {}
-  //   switch(key){
-  //     case 'currentCashflow': payload = {current_cashflow: {value, notes: state.notes.currentCashflow}}
-  //     break;
-  //     case 'expectedSalary': payload = {expected_salary: {value, notes: state.notes.expectedSalary}}
-  //     break;
-  //     case 'grossRevenue': payload = {gross_revenue: {value, notes: state.notes.grossRevenue}}
-  //     break;
-  //     case 'askingPrice': payload = {asking_price: {value, notes: state.notes.askingPrice}}
-  //     break;
-  //     // case 'sde': payload = {sde: {value}}
-  //     // break;
-  //     case 'sbaLoanPayment': payload = {loan_sba: {amount: value, rate: state.loan_sba_rate, term: state.loan_sba_term, notes: state.notes.sbaLoanPayment}}
-  //     break;
-  //     case 'additionalLoanPayment': payload = {additional_loan: {amount: value, rate: state.additional_loan_rate, term: state.additional_loan_term, notes: state.notes.additionalLoanPayment}}
-  //     break;
-  //     case 'totalDebtPayments': payload = {loan_sba: {amount: value}, additional_loan: {amount: value}}
-  //     break
-  //     case 'loan_sba_amount': payload = {loan_sba: {amount: value, rate: state.loan_sba_rate, term: state.loan_sba_term}}
-  //     break
-  //     case 'loan_sba_rate': payload = {loan_sba: {rate: value, term: state.loan_sba_rate, amount: state.sbaLoanPayment}}
-  //     break
-  //     case 'loan_sba_term': payload = {loan_sba: {term: value, rate: state.loan_sba_rate, amount: state.sbaLoanPayment}}
-  //     break
-  //     case 'additional_loan_amount': payload = {additional_loan: {amount: value, rate: state.loan_sba_rate, term: state.loan_sba_term}}
-  //     break
-  //     case 'additional_loan_rate': payload = {additional_loan: {rate: value, term: state.additional_loan_term, amount: state.additionalLoanPayment}}
-  //     break
-  //     case 'additional_loan_term': payload = {additional_loan: {term: value, rate: state.additional_loan_rate, amount: state.additionalLoanPayment}}
-  //     break
-  //     }
 
-  //     const updated = await updateBusiness(businessid || "", payload);
-  //     console.log("updated", updated);
-
-  // }
 
   const metricCards = cardOrder.map((id) => ({
     id,

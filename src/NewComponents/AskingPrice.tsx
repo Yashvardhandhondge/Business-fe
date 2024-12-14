@@ -18,7 +18,7 @@ interface Props {
   updateNotes: (key: string, value: string) => void// Function to update parent state
 }
 
-const AskingPriceCard: React.FC<Props> = ({ state, updateState }) => {
+const AskingPriceCard: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false); // Dialog visibility state
   const [askingPrice, setAskingPrice] = useState(state.askingPrice); // Local asking price state
   const [notes, setNotes] = useState<string[]>(state.notes.askingPrice); // Notes input state
@@ -31,7 +31,8 @@ const AskingPriceCard: React.FC<Props> = ({ state, updateState }) => {
 
   // Save changes and update parent state
   const handleSaveChanges = () => {
-    updateState("askingPrice", askingPrice); // Update askingPrice in parent state
+    updateState("askingPrice", askingPrice);
+    updateNotes("askingPrice",notes.join("\n"))
     setIsDialogOpen(false); // Close dialog
   };
 

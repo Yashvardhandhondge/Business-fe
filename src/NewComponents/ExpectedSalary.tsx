@@ -15,10 +15,10 @@ import Notes from "./Notes";
 interface Props {
   state: { expectedSalary: number, notes: { expectedSalary: string[] } }; 
   updateState: (key: string, value: number) => void; 
-  updateNotes: (key: string, value: string) => void
+  updateNotes: (key: string, value: string) => Promise<void>
 }
 
-const ExpectedSalary: React.FC<Props> = ({ state, updateState }) => {
+const ExpectedSalary: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
   const [salary, setSalary] = useState<number>(state.expectedSalary); 
   const [notes, setNotes] = useState<string>(""); 
@@ -29,8 +29,9 @@ const ExpectedSalary: React.FC<Props> = ({ state, updateState }) => {
   },[state])
 
  
-  const handleSaveChanges = () => {
-    updateState("expectedSalary", salary); 
+  const handleSaveChanges = async () => {
+    updateState("expectedSalary", salary);
+    await updateNotes("expectedSalary", notes); 
     setNotes("");
     setIsDialogOpen(false); 
   };

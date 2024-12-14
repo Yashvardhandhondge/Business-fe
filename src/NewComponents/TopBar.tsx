@@ -110,7 +110,7 @@ export default function TopBar({ data }: { data: any, state: any }) {
                       setShowEditModal(true);
                     }
                   }}>
-                    <p className="text-sm text-gray-500">Edit Data</p>
+                    {/* <p className="text-sm text-gray-500">Edit Data</p> */}
                     <PencilIcon className="h-2 w-2" />
                   </Button>
                 </div>

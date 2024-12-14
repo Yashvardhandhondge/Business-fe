@@ -19,7 +19,7 @@ interface Props {
 updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
+const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [projectedCashflow, setProjectedCashflow] = useState(state.projectedCashflow);
   const [currentCashflow, setCurrentCashflow] = useState(state.currentCashflow);
@@ -34,6 +34,7 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
     setCurrentCashflow(state.currentCashflow);
     setTotalDebtPayments(state.totalDebtPayments);
     setNewExpenses(state.newExpenses);
+    setNotes(state.notes.projectedCashflow)
   },[state])
 
   const handleSaveChanges = () => {
@@ -41,6 +42,7 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState }) => {
     updateState("currentCashflow", currentCashflow);
     updateState("totalDebtPayments", totalDebtPayments);
     updateState("newExpenses", newExpenses);
+    updateNotes("projectedCashflow", notes);
     setIsDialogOpen(false);
   };
 

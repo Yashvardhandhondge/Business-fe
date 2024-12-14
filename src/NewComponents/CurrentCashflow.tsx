@@ -31,8 +31,10 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    
     setCashflow(state.currentCashflow);
     setNewExpenses(state.newExpenses);
+    
   }, [state]);
 
   const handleSaveChanges = async () => {

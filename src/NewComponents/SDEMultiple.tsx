@@ -19,7 +19,7 @@ interface Props {
 updateNotes: (key: string, value: string) => Promise<void>;
 }
 
-const sdeMultipleCard: React.FC<Props> = ({ state, updateState }) => {
+const sdeMultipleCard: React.FC<Props> = ({ state, updateState, updateNotes }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sdeMultiple, setSdeMultiple] = useState(state.sde_multiple);
   const [askingPrice, setAskingPrice] = useState(state.askingPrice);
@@ -31,10 +31,12 @@ const sdeMultipleCard: React.FC<Props> = ({ state, updateState }) => {
     setSdeMultiple(state.sdeMultiple);
     setAskingPrice(state.askingPrice);
     setSCEValue(state.sde);
+    setNotes(state.notes.sdeMultiple)
   }, [state]);
   const handleSaveChanges = () => {
     updateState("sdeMultiple", sdeMultiple);
     updateState("askingPrice", askingPrice);
+    updateNotes("sdeMultiple", notes)
     setIsDialogOpen(false);
   };
 
