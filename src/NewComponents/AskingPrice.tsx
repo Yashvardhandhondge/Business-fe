@@ -56,7 +56,7 @@ const AskingPriceCard: React.FC<Props> = ({ state, updateState, updateNotes }) =
               </button> */}
             </div>
             <p className="text-xl flex-1  text-green-500">{`$${state.askingPrice.toLocaleString()}`}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.askingPrice[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.askingPrice || ""}</p>
           </div>
         </DialogTrigger>
 

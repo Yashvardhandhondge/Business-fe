@@ -66,7 +66,7 @@ const CurrentCashflowCard: React.FC<CurrentCashflowProps> = ({
               </button> */}
             </div>
             <p className="text-xl text-yellow-500 flex-1">${state.currentCashflow.toLocaleString()}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.currentCashflow[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.currentCashflow || ""}</p>
           </div>
         </DialogTrigger>
 

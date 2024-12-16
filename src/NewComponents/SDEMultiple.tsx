@@ -77,7 +77,7 @@ const sdeMultipleCard: React.FC<Props> = ({ state, updateState, updateNotes }) =
               </button> */}
             </div>
             <p className="text-xl flex-1  text-blue-500">{` ${state.sdeMultiple} `}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sdeMultiple[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.sdeMultiple || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

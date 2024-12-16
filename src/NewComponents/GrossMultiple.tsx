@@ -81,7 +81,7 @@ const GrossMultipleCard: React.FC<Props> = ({ state, updateState, updateNotes })
               </button> */}
             </div>
             <p className="text-xl flex-1  text-blue-500">{` ${grossMultiple.toFixed(2)} `}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.grossMultiple[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.grossMultiple || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

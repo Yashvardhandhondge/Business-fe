@@ -66,7 +66,7 @@ const ProjectedCashflowCard: React.FC<Props> = ({ state, updateState, updateNote
               </button> */}
             </div>
             <p className="text-xl flex-1  text-blue-500">{` $${state.projectedCashflow.toLocaleString()} `}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedCashflow[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedCashflow || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

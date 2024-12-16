@@ -87,7 +87,7 @@ export default function TopBar({ data }: { data: any, state: any }) {
 
   return (
     <div className="bg-transparent">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <header className="top-0 z-50 flex h-10 items-center justify-between mb-3 px-4">
         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate(-1)}>
           <ArrowLeft className="h-4 w-4 mt-2 text-blue-500" />

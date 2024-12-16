@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import useBusinessStore from '../../store/buisnessSrore';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Business {
   _id?: string;
@@ -116,6 +118,7 @@ export default function HomePage() {
       }
       handleClosePopup();
     } catch (error) {
+      toast.error("Business already exists, use another name.");
       console.error('Error adding business:', error);
     }
   };
@@ -154,6 +157,7 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-6  min-h-screen relative">
+      <ToastContainer />
       {/* Header */}
       <motion.div
         initial={{ y: -100 }}

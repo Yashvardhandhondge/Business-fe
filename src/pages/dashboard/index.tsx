@@ -25,7 +25,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-
 const App: React.FC = () => {
   const params = useParams();
   const { fetchBusiness, updateBusiness, addBusiness } = useBusinessStore();
@@ -437,7 +436,7 @@ const App: React.FC = () => {
       ...prevState,
       notes: {
         ...prevState.notes,
-        [key]: value.split("\n"),
+        [key]: value,
       },
     }));
   };
@@ -615,7 +614,6 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container min-h-screen bg-blue-100 ">
-      <ToastContainer/>
       <TopBar state={state} data={businessData?.data} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="metrics-grid">

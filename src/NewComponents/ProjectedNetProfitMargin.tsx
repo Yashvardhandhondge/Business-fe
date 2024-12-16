@@ -63,7 +63,7 @@ const ProjectedNetProfitMargin: React.FC<Props> = ({ state, updateState, updateN
               </button> */}
             </div>
             <p className="text-xl flex-1  text-blue-500">{` ${state.projectedNetProfitMargin}% `}</p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedNetProfitMargin[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.projectedNetProfitMargin || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>

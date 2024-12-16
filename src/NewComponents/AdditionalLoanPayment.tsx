@@ -66,7 +66,7 @@ const AdditionalLoanPayment: React.FC<Props> = ({ state, updateAdditionalLoan, u
               </button> */}
             </div>
             <p className="text-xl flex-1  text-blue-500">{`$${state.additionalLoanPayment.toLocaleString()}`} <span className="text-sm text-gray-500">/year</span></p>
-            <p className="text-[0.65rem] text-gray-500">{state?.notes?.additionalLoanPayment[0] || ""}</p>
+            <p className="text-[0.65rem] text-gray-500">{state?.notes?.additionalLoanPayment || ""}</p>
           </div>
         </DialogTrigger>
         <DialogContent>
