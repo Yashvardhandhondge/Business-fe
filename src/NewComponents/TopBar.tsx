@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowLeft, FileText, Loader2, PencilIcon, Upload, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import useBusinessStore from "../store/buisnessSrore";
 import FilesModal from "./FilesModal";
 import { Input } from "@/components/ui/input";
